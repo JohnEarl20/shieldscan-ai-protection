@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Popup</title>
+    <style>
+        body { padding: 20px; font-family: Arial, sans-serif; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .test-btn { background: #4f8ef7; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h3>Test Popup Functionality</h3>
+    
+    <button class="test-btn" onclick="testDashboard()">Test Dashboard</button>
+    <button class="test-btn" onclick="testScanner()">Test Scanner</button>
+    <button class="test-btn" onclick="testQuickScan()">Test Quick Scan</button>
+    
+    <div id="result" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+    
+    <script>
+        function testDashboard() {
+            document.getElementById('result').innerHTML = 'Dashboard button clicked! ✅';
+            // Simulate opening dashboard
+            setTimeout(() => {
+                window.open('browser_extension/dashboard.html', '_blank');
+            }, 500);
+        }
+        
+        function testScanner() {
+            document.getElementById('result').innerHTML = 'Scanner button clicked! ✅';
+            setTimeout(() => {
+                window.open('browser_extension/scanner.html', '_blank');
+            }, 500);
+        }
+        
+        function testQuickScan() {
+            document.getElementById('result').innerHTML = 'Quick scan started... ⏳';
+            setTimeout(() => {
+                document.getElementById('result').innerHTML = 'Quick scan completed! ✅';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
