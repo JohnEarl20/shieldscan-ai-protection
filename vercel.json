@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "name": "shieldscan-ai-protection",
+  "builds": [
+    {
+      "src": "browser_extension/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/browser_extension/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/browser_extension/dashboard.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+      ]
+    }
+  ]
+}
