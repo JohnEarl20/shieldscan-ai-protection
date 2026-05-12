@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════════════════════════
 // BACKGROUND SERVICE - AI Scam Protection ShieldScan
 // Real-time threat detection, VPN management, and live system integration
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1059,7 +1059,176 @@ async function _apiPost(path, body) {
   } catch { return null; }
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// CLOUD THREAT INTELLIGENCE — Free public APIs (no local server needed)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// URLhaus (abuse.ch) — free, no key, checks URLs against malware DB
+async function checkURLhaus(url) {
+  try {
+    const body = new URLSearchParams({ url });
+    const r = await fetch('https://urlhaus-api.abuse.ch/v1/url/', {
+      method: 'POST',
+      body,
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!r.ok) return null;
+    const data = await r.json();
+    // query_status: "is_malware" | "no_results" | "invalid_url"
+    if (data.query_status === 'is_malware') {
+      return {
+        malicious: true,
+        score: 95,
+        source: 'URLhaus',
+        threat: data.threat || 'malware',
+        tags: data.tags || [],
+      };
+    }
+    return { malicious: false, score: 0, source: 'URLhaus' };
+  } catch (_) {
+    return null;
+  }
+}
+
+// PhishTank — free phishing URL check (no key for basic lookup)
+async function checkPhishTank(url) {
+  try {
+    const encoded = encodeURIComponent(url);
+    const r = await fetch(`https://checkurl.phishtank.com/checkurl/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `url=${encoded}&format=json`,
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!r.ok) return null;
+    const data = await r.json();
+    if (data.results?.in_database && data.results?.valid) {
+      return { malicious: true, score: 90, source: 'PhishTank', threat: 'phishing' };
+    }
+    return { malicious: false, score: 0, source: 'PhishTank' };
+  } catch (_) {
+    return null;
+  }
+}
+
+// Google Safe Browsing v4 — free, 10k req/day
+// Uses the public lookup API (no key needed for basic check via proxy)
+async function checkGoogleSafeBrowsing(url) {
+  try {
+    // Use the public Safe Browsing Transparency Report API (no key needed)
+    const encoded = btoa(url).replace(/=/g, '');
+    const r = await fetch(
+      `https://transparencyreport.google.com/transparencyreport/api/v3/safebrowsing/status?site=${encodeURIComponent(url)}`,
+      { signal: AbortSignal.timeout(5000) }
+    );
+    if (!r.ok) return null;
+    const text = await r.text();
+    // Response is JSONP-like: )]}'\n[...data...]
+    const json = JSON.parse(text.replace(/^\)\]\}'\n/, ''));
+    // json[0][1] = 0 means safe, 1 means unsafe
+    const unsafe = json?.[0]?.[1] === 1;
+    return {
+      malicious: unsafe,
+      score: unsafe ? 85 : 0,
+      source: 'Google Safe Browsing',
+      threat: unsafe ? 'malware/phishing' : null,
+    };
+  } catch (_) {
+    return null;
+  }
+}
+
+// VirusTotal public API — free, 4 req/min, 500/day
+// Uses the public v3 API (requires free API key stored in extension storage)
+async function checkVirusTotal(url) {
+  try {
+    const stored = await chrome.storage.local.get('vtApiKey');
+    const apiKey = stored?.vtApiKey || '';
+    if (!apiKey) return null;
+
+    // Encode URL as base64url for VT v3
+    const urlId = btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+    const r = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
+      headers: { 'x-apikey': apiKey },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!r.ok) return null;
+    const data = await r.json();
+    const stats = data?.data?.attributes?.last_analysis_stats;
+    if (!stats) return null;
+    const malicious = (stats.malicious || 0) + (stats.suspicious || 0);
+    const total = Object.values(stats).reduce((a, b) => a + b, 0);
+    const score = total > 0 ? Math.round((malicious / total) * 100) : 0;
+    return {
+      malicious: malicious > 2,
+      score: Math.min(score * 2, 100),
+      source: 'VirusTotal',
+      engines_malicious: malicious,
+      engines_total: total,
+    };
+  } catch (_) {
+    return null;
+  }
+}
+
+// ── Master scan function using all available APIs ──────────────────────────────
+async function cloudScanURL(url) {
+  if (!url || !url.startsWith('http')) {
+    return { result: 'safe', score: 0, source: 'local', findings: [] };
+  }
+
+  // Run all checks in parallel
+  const [urlhaus, phishtank, gsb, vt] = await Promise.allSettled([
+    checkURLhaus(url),
+    checkPhishTank(url),
+    checkGoogleSafeBrowsing(url),
+    checkVirusTotal(url),
+  ]);
+
+  const results = [urlhaus, phishtank, gsb, vt]
+    .filter(r => r.status === 'fulfilled' && r.value)
+    .map(r => r.value);
+
+  // Aggregate scores
+  let maxScore = 0;
+  let maliciousCount = 0;
+  const sources = [];
+  const findings = [];
+
+  for (const r of results) {
+    if (r.malicious) {
+      maliciousCount++;
+      maxScore = Math.max(maxScore, r.score);
+      findings.push({ source: r.source, threat: r.threat || 'malicious', score: r.score });
+    }
+    sources.push(r.source);
+  }
+
+  // Also run local heuristics
+  const local = analyzeURL(url);
+  if (local.score > 0) {
+    maxScore = Math.max(maxScore, local.score);
+    findings.push(...(local.threats || []).map(t => ({ source: 'heuristics', threat: t.name, score: local.score })));
+  }
+
+  const finalScore = Math.max(maxScore, local.score);
+  const result = finalScore >= 70 ? 'malicious' : finalScore >= 35 ? 'suspicious' : 'safe';
+  const level  = finalScore >= 70 ? 'high' : finalScore >= 35 ? 'medium' : 'low';
+
+  return {
+    result,
+    level,
+    score: finalScore,
+    sources_checked: sources.length,
+    malicious_sources: maliciousCount,
+    findings,
+    url,
+    timestamp: new Date().toISOString(),
+  };
+}
+
 async function getSystemStats() {
+  // Try local API first
   const data = await _apiGet('/api/stats');
   if (data && !data.error) {
     systemState.threatsBlocked = data.threats_blocked ?? systemState.threatsBlocked;
@@ -1070,9 +1239,17 @@ async function getSystemStats() {
       scansToday: systemState.scansToday,
       protectionScore: systemState.protectionScore,
       uptime: data.uptime_hours ?? systemState.uptime,
+      apiOnline: true,
     };
   }
-  return { threatsBlocked: systemState.threatsBlocked, scansToday: systemState.scansToday, protectionScore: systemState.protectionScore, uptime: systemState.uptime };
+  // Return in-memory state when API is offline
+  return {
+    threatsBlocked: systemState.threatsBlocked,
+    scansToday: systemState.scansToday,
+    protectionScore: systemState.protectionScore,
+    uptime: systemState.uptime,
+    apiOnline: false,
+  };
 }
 
 async function getProtectionStatus() {
@@ -1118,20 +1295,30 @@ async function performQuickScan() {
 
 async function performScan(data) {
   const { input } = data;
+  systemState.scansToday++;
+
+  // Try local API first
   const apiResult = await _apiPost('/api/scan', { target: input });
   if (apiResult && !apiResult.error) {
     await chrome.storage.local.set({ lastScanResult: apiResult });
     if (apiResult.level === 'high') {
       systemState.threatsBlocked++;
-      broadcastToAllTabs({ type: 'THREAT_DETECTED', data: { id: Date.now(), timestamp: new Date(), type: 'malicious', title: 'AI Scanner � threat detected', url: input, category: 'scam', action: 'blocked', score: apiResult.score } });
+      broadcastToAllTabs({ type: 'THREAT_DETECTED', data: { id: Date.now(), timestamp: new Date(), type: 'malicious', title: 'Threat detected', url: input, category: 'scam', action: 'blocked', score: apiResult.score } });
     }
-    return { result: apiResult.result || 'safe', score: apiResult.score, findings: apiResult.url_findings || [], url: input };
+    return { result: apiResult.result || 'safe', score: apiResult.score, findings: apiResult.url_findings || [], url: input, source: 'local_api' };
   }
-  // Fallback to local analysis
-  const fallback = analyzeURL(input);
-  return { result: fallback.score >= 85 ? 'malicious' : fallback.score >= 50 ? 'suspicious' : 'safe', score: fallback.score, findings: fallback.threats || [], url: input };
-}
 
+  // Fallback: use cloud APIs (URLhaus, PhishTank, Google Safe Browsing, VirusTotal)
+  const cloudResult = await cloudScanURL(input);
+  await chrome.storage.local.set({ lastScanResult: cloudResult });
+
+  if (cloudResult.result === 'malicious') {
+    systemState.threatsBlocked++;
+    broadcastToAllTabs({ type: 'THREAT_DETECTED', data: { id: Date.now(), timestamp: new Date(), type: 'malicious', title: 'Threat detected: ' + input.slice(0, 60), url: input, category: (cloudResult.findings && cloudResult.findings[0] && cloudResult.findings[0].threat) || 'malware', action: 'blocked', score: cloudResult.score } });
+  }
+
+  return cloudResult;
+}
 function analyzeURL(url) {
   // Simple URL analysis fallback
   const suspiciousKeywords = [

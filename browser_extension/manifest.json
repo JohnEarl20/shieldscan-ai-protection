@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "AI Scam Protection",
-  "version": "0.4.0",
-  "description": "Advanced browser protection with real threat detection, VPN, and Microsoft Defender integration.",
+  "name": "ShieldScan — AI Scam Protection",
+  "version": "1.0.0",
+  "description": "AI-powered scam protection with real-time threat detection, WireGuard VPN, and cloud malware scanning.",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "AI Scam Protection"
+    "default_title": "ShieldScan AI Protection"
   },
   "options_page": "dashboard.html",
   "background": {
@@ -27,7 +27,12 @@
   "host_permissions": [
     "http://*/*",
     "https://*/*",
-    "http://localhost:8765/*"
+    "http://localhost:8765/*",
+    "http://127.0.0.1:51821/*",
+    "https://urlhaus-api.abuse.ch/*",
+    "https://checkurl.phishtank.com/*",
+    "https://transparencyreport.google.com/*",
+    "https://www.virustotal.com/*"
   ],
   "declarative_net_request": {
     "rule_resources": [
@@ -57,14 +62,9 @@
         "blocked.html",
         "dashboard.html",
         "scanner.html",
-        "test_extension.html",
-        "dashboard-events.js",
-        "dashboard-inline.js",
-        "dashboard-csp-compliant.js",
-        "shieldscan-api.js",
-        "fix_blocking_issue.js",
         "threat-detector.js",
-        "vpn-manager.js"
+        "vpn-manager.js",
+        "developer-photo.jpg"
       ],
       "matches": [
         "http://*/*",
