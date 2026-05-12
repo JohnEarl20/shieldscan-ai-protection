@@ -1,0 +1,12 @@
+[build]
+  publish = "browser_extension"
+
+[[redirects]]
+  from = "/"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/dashboard.html"
+  status = 200
