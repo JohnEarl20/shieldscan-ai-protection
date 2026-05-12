@@ -1,0 +1,9 @@
+﻿{
+    "name":  "com.shieldscan.protection",
+    "description":  "ShieldScan Native Messaging Host â€” bridges the browser extension to the Python protection engine",
+    "path":  "C:\\AI Scam Protection Platform\\browser_extension\\shieldscan_native_host.bat",
+    "type":  "stdio",
+    "allowed_origins":  [
+                            "chrome-extension://eebbikiogjppfbigghbikdjbbbmdjmdn/"
+                        ]
+}

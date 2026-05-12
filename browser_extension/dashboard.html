@@ -1,0 +1,3550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AI Scam Protection - ShieldScan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="dashboard.css"/>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z" fill="#4f8ef7"/>
+        <path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">ShieldScan</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" data-page="page-dashboard">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Dashboard
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-aiscam">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/>
+        <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      AI Scam Protection
+      <span class="nav-badge">NEW</span>
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-scanner">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      Scanner
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-detection">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M8 12h8"/><path d="M12 8v8"/>
+      </svg>
+      Detection History
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-threats">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      Threat History
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-adsblocked">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+      </svg>
+      Ads Blocked
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-realtime">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Real-Time Protection
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-vpn">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      VPN
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-privacy">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 1v2"/>
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M5 4.22l1.42 1.42"/>
+        <path d="M19 4.22l-1.42 1.42"/>
+        <path d="M1 12h2"/>
+        <path d="M21 12h2"/>
+        <path d="M5 19.78l1.42-1.42"/>
+        <path d="M19 19.78l-1.42-1.42"/>
+      </svg>
+      Privacy
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-identity">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 22c2.5-5 13.5-5 16 0"/>
+      </svg>
+      Identity
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-tools">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 7h16M4 12h10M4 17h16"/>
+      </svg>
+      Tools
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-scanguard">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/>
+        <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Scan Guard
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-settings">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+      Settings
+    </a>
+
+    <a href="#" class="nav-item" data-page="page-account">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 22c2.5-5 13.5-5 16 0"/>
+      </svg>
+      Account
+    </a>
+  </nav>
+
+  <!-- Sidebar bottom: Free plan badge -->
+  <div class="sidebar-bottom">
+    <div class="free-plan-card">
+      <div class="free-plan-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="free-plan-title">Free — Unlimited</div>
+        <div class="free-plan-sub">Full protection, no limits.</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <header class="topbar">
+    <div class="free-badge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Free · Unlimited
+    </div>
+
+    <div class="topbar-actions">
+      <button class="icon-btn" aria-label="Notifications">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="notif-dot"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- PAGE: DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <!-- Protected banner -->
+      <section class="protected-banner">
+        <div class="banner-left">
+          <div class="shield-wrap">
+            <div class="shield-glow"></div>
+            <div class="shield-icon">🛡️</div>
+          </div>
+
+          <div class="banner-text">
+            <div class="banner-title">
+              You’re <span class="protected-text">protected</span>
+            </div>
+            <div class="banner-sub">
+              ShieldScan is actively protecting your device from scams and threats.
+            </div>
+          </div>
+        </div>
+
+        <div class="banner-status">
+          <div style="font-size:12px;opacity:.8;margin-bottom:4px;color:#fff">Protection status</div>
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            Active
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats grid -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Protection score</div>
+          <div class="stat-value" id="statScore">79</div>
+          <div class="stat-sub">/100 Fair</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Last scan</div>
+          <div class="stat-value">6 days ago</div>
+          <div class="stat-sub">Quick + smart checks</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Threats blocked</div>
+          <div class="stat-value" id="statThreats">12</div>
+          <div class="stat-sub">Blocked & quarantined</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Real-time protection</div>
+          <div class="stat-value active-text">Active</div>
+          <div class="stat-sub">Always on</div>
+        </div>
+      </section>
+
+      <!-- Two-column main content: Security overview + Recent activity -->
+      <section class="dashboard-main-grid">
+        <div class="section-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Security overview</span>
+          </div>
+
+          <div class="security-item">
+            <div class="sec-icon">🛡️</div>
+            <div class="sec-info">
+              <div class="sec-title">AI Scam Protection</div>
+              <div class="sec-desc">AI-powered protection against scams and phishing</div>
+            </div>
+            <span class="sec-badge on">Active</span>
+          </div>
+
+          <div class="security-item">
+            <div class="sec-icon">✅</div>
+            <div class="sec-info">
+              <div class="sec-title">Real-Time Protection</div>
+              <div class="sec-desc">Monitoring and blocking threats in real time</div>
+            </div>
+            <span class="sec-badge on">Active</span>
+          </div>
+
+          <div class="security-item">
+            <div class="sec-icon">🌐</div>
+            <div class="sec-info">
+              <div class="sec-title">VPN</div>
+              <div class="sec-desc">Secure your connection and browse privately</div>
+            </div>
+            <span id="secVpnBadge" class="sec-badge off">Inactive</span>
+          </div>
+
+        </div>
+
+        <div class="section-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Recent activity</span>
+            <a href="#" class="view-all">View all</a>
+          </div>
+
+          <div class="recent-list">
+            <!-- JS expects .activity-item and .activity-* for updates.
+                 We keep 4 rows like the screenshot. -->
+            <div class="activity-item scan-row">
+              <div class="scan-row-icon act-icon info">🔴</div>
+              <div class="scan-row-info">
+                <div class="scan-url activity-title">Malicious website blocked</div>
+                <div class="scan-time act-sub">https://freeviewtiktok.com</div>
+              </div>
+              <div class="scan-time act-time">1 min ago</div>
+            </div>
+
+            <div class="activity-item scan-row">
+              <div class="scan-row-icon act-icon good">✅</div>
+              <div class="scan-row-info">
+                <div class="scan-url activity-title">Real-time protection</div>
+                <div class="scan-time act-sub">Threat blocked</div>
+              </div>
+              <div class="scan-time act-time">8 min ago</div>
+            </div>
+
+            <div class="activity-item scan-row">
+              <div class="scan-row-icon act-icon info">🧠</div>
+              <div class="scan-row-info">
+                <div class="scan-url activity-title">Scan completed</div>
+                <div class="scan-time act-sub">Quick scan</div>
+              </div>
+              <div class="scan-time act-time">1 hour ago</div>
+            </div>
+
+            <div class="activity-item scan-row">
+              <div class="scan-row-icon act-icon good">🛡️</div>
+              <div class="scan-row-info">
+                <div class="scan-url activity-title">AI Scam Protection</div>
+                <div class="scan-time act-sub">Scan link detected and blocked</div>
+              </div>
+              <div class="scan-time act-time">2 hours ago</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- PAGE: AI SCAM PROTECTION -->
+    <div id="page-aiscam" class="page">
+
+      <!-- Top banner: AI Scam Protection is active -->
+      <div class="ai-banner">
+        <div class="ai-banner-left">
+          <div class="ai-big-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z" fill="rgba(45,206,137,0.3)" stroke="#2dce89" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="3" fill="#2dce89" opacity="0.8"/>
+              <path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ai-banner-text">
+            <div class="ai-banner-title">AI Scam Protection is <span style="color:var(--green)">active</span></div>
+            <div class="ai-banner-sub">Our AI detects and blocks scams in real time so you can browse, message, and shop with confidence.</div>
+          </div>
+        </div>
+        <div class="ai-banner-status">
+          <div class="ai-banner-status-label">Protection status</div>
+          <div class="ai-status-pill">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block"></span>
+            Active
+          </div>
+        </div>
+      </div>
+
+      <!-- Scanner card + feature tiles side by side -->
+      <div class="ai-grid">
+
+        <!-- Left: Scanner card -->
+        <div class="section-card ai-card">
+          <div class="section-card-header" style="gap:10px">
+            <span class="section-card-title">AI Scam Protection Scanner</span>
+            <span class="badge-new">NEW</span>
+          </div>
+
+          <div style="padding:16px 16px 0">
+            <p class="ai-scan-desc">Detect scams, phishing attempts, malicious links, and suspicious content in real time using advanced AI technology.</p>
+          </div>
+
+          <!-- Scan mode tabs -->
+          <div style="padding:12px 16px 0">
+            <div class="scan-tabs" id="aiScanTabs">
+              <button class="tab-btn active" data-tab="link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                Paste link
+              </button>
+              <button class="tab-btn" data-tab="text">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                Paste text
+              </button>
+              <button class="tab-btn" data-tab="file">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                Upload file
+              </button>
+              <button class="tab-btn" data-tab="screenshot">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                Screenshot
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab panels -->
+          <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px">
+
+            <!-- Link tab -->
+            <div id="aiTab-link" class="ai-tab-panel">
+              <div class="scan-input-row">
+                <div class="scan-input-wrap">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                  <input id="aiScanInput" type="text" placeholder="Paste a link to scan (e.g. https://example.com)"/>
+                </div>
+                <button id="aiScanBtn" class="btn-scan">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  Scan now
+                </button>
+              </div>
+              <div class="scan-note">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                We'll analyze it instantly and show you if it's safe.
+              </div>
+            </div>
+
+            <!-- Text tab -->
+            <div id="aiTab-text" class="ai-tab-panel" style="display:none">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <textarea id="aiScanTextInput" placeholder="Paste suspicious text, message, or email content here..." style="width:100%;min-height:90px;background:var(--bg-input);border:1px solid var(--border);border-radius:9px;padding:10px 14px;color:var(--text1);font-size:13px;font-family:var(--font);resize:vertical;outline:none;line-height:1.5"></textarea>
+                <button id="aiScanTextBtn" class="btn-scan" style="align-self:flex-start">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  Analyze text
+                </button>
+              </div>
+            </div>
+
+            <!-- File tab -->
+            <div id="aiTab-file" class="ai-tab-panel" style="display:none">
+              <label class="ai-upload-zone" for="aiFileInput" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:2px dashed var(--border);border-radius:12px;padding:28px 20px;cursor:pointer;transition:border-color .15s;background:var(--bg-input)">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="1.5">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span style="font-size:13px;color:var(--text2)">Click to upload or drag a file here</span>
+                <span style="font-size:11px;color:var(--text3)">Supports .exe, .pdf, .docx, .zip and more</span>
+                <input id="aiFileInput" type="file" style="display:none" accept=".exe,.pdf,.doc,.docx,.zip,.js,.bat,.ps1"/>
+              </label>
+              <div id="aiFileResult" style="display:none;margin-top:10px"></div>
+            </div>
+
+            <!-- Screenshot tab -->
+            <div id="aiTab-screenshot" class="ai-tab-panel" style="display:none">
+              <label class="ai-upload-zone" for="aiScreenshotInput" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:2px dashed var(--border);border-radius:12px;padding:28px 20px;cursor:pointer;transition:border-color .15s;background:var(--bg-input)">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                <span style="font-size:13px;color:var(--text2)">Upload a screenshot to analyze</span>
+                <span style="font-size:11px;color:var(--text3)">Supports .png, .jpg, .webp</span>
+                <input id="aiScreenshotInput" type="file" style="display:none" accept="image/*"/>
+              </label>
+              <div id="aiScreenshotResult" style="display:none;margin-top:10px"></div>
+            </div>
+
+            <div id="aiScanResult" class="scan-result hidden"></div>
+          </div>
+        </div>
+
+        <!-- Right: Feature tiles -->
+        <div class="section-card ai-features-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Protection Features</span>
+          </div>
+          <div class="ai-features-grid">
+            <div class="feature-tile">
+              <div class="feature-tile-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+              </div>
+              <div class="feature-tile-title">AI-Powered Detection</div>
+              <div class="feature-tile-sub">Advanced AI detects scams and threats in real time.</div>
+            </div>
+            <div class="feature-tile">
+              <div class="feature-tile-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="feature-tile-title">Phishing &amp; Scam Protection</div>
+              <div class="feature-tile-sub">Identifies phishing sites, fake shops, crypto scams, and malicious links.</div>
+            </div>
+            <div class="feature-tile">
+              <div class="feature-tile-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <div class="feature-tile-title">Privacy First</div>
+              <div class="feature-tile-sub">We don't store or share your scan data.</div>
+            </div>
+            <div class="feature-tile">
+              <div class="feature-tile-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </div>
+              <div class="feature-tile-title">Always Learning</div>
+              <div class="feature-tile-sub">Our AI improves every day to stay ahead of new scammers.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Scans — full width -->
+        <div class="section-card ai-recent-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Recent Scans</span>
+            <a href="#" class="view-all">View all</a>
+          </div>
+          <div class="ai-recent-list" id="aiRecentScans">
+            <div class="recent-scan-row">
+              <div class="recent-scan-left">
+                <div class="recent-scan-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
+                <div class="recent-scan-info">
+                  <div class="recent-scan-title">https://freeviewtiktok.com</div>
+                  <div class="recent-scan-sub">Scanned · 1 min ago</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span class="recent-pill malicious">Malicious</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <div class="recent-scan-row">
+              <div class="recent-scan-left">
+                <div class="recent-scan-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
+                <div class="recent-scan-info">
+                  <div class="recent-scan-title">https://secure-login-update.com</div>
+                  <div class="recent-scan-sub">Scanned · 5 min ago</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span class="recent-pill malicious">Malicious</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <div class="recent-scan-row">
+              <div class="recent-scan-left">
+                <div class="recent-scan-icon" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.25)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                </div>
+                <div class="recent-scan-info">
+                  <div class="recent-scan-title">"Limited time offer! Claim now!"</div>
+                  <div class="recent-scan-sub">Scanned · 12 min ago</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span class="recent-pill safe">Safe</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end ai-grid -->
+    </div>
+
+    <!-- PAGE: SCANNER -->
+    <div id="page-scanner" class="page">
+
+      <!-- Header -->
+      <div class="scanner-header">
+        <h1 class="scanner-title">Scanner</h1>
+        <p class="scanner-sub">Scan your device for scams, malicious files, risky links, and other threats.</p>
+      </div>
+
+      <!-- Scan type tabs -->
+      <div class="scan-type-tabs" id="scanTypeTabs">
+        <button class="scan-type-btn active" data-scantype="quick">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          Quick Scan
+        </button>
+        <button class="scan-type-btn" data-scantype="full">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+          Full Scan
+        </button>
+        <button class="scan-type-btn" data-scantype="custom">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          Custom Scan
+        </button>
+      </div>
+
+      <!-- Main scan area -->
+      <div class="scanner-main-area">
+
+        <!-- Left: animated shield circle -->
+        <div class="scanner-circle-wrap">
+          <div class="scanner-ring scanner-ring-outer" id="scanRingOuter"></div>
+          <div class="scanner-ring scanner-ring-mid"></div>
+          <div class="scanner-ring-core">
+            <svg id="scanShieldSvg" width="64" height="64" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"
+                    fill="rgba(79,142,247,0.25)" stroke="#4f8ef7" stroke-width="1.5"/>
+              <path id="scanShieldCheck" d="M9 12l2 2 4-4" stroke="#2dce89" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right: scan info + progress -->
+        <div class="scanner-info-panel">
+          <div class="scan-info-title" id="scanStatus">Quick Scan</div>
+          <div class="scan-info-sub" id="scanDesc">Click <strong>Start Scan</strong> to begin scanning your system.</div>
+
+          <!-- Stats rows -->
+          <div class="scan-stats-rows">
+            <div class="scan-stat-row">
+              <div class="scan-stat-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                </svg>
+              </div>
+              <span class="scan-stat-label">Scan type:</span>
+              <span class="scan-stat-value" id="scanTypeLabel">Quick Scan</span>
+            </div>
+            <div class="scan-stat-row">
+              <div class="scan-stat-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+              </div>
+              <span class="scan-stat-label">Scanned items:</span>
+              <span class="scan-stat-value" id="scannedItems">0</span>
+            </div>
+            <div class="scan-stat-row">
+              <div class="scan-stat-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <span class="scan-stat-label">Time elapsed:</span>
+              <span class="scan-stat-value" id="timeElapsed">00:00:00</span>
+            </div>
+            <div class="scan-stat-row">
+              <div class="scan-stat-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <span class="scan-stat-label">Threats found:</span>
+              <span class="scan-stat-value" id="threatsFound" style="color:var(--red);font-weight:900">0</span>
+            </div>
+          </div>
+
+          <!-- Current file being scanned -->
+          <div class="scan-current-file" id="scanCurrentFile" style="display:none">
+            <span class="scan-file-path" id="scanFilePath">C:\Users\User\AppData\Local\Temp\download.exe</span>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="scan-progress-wrap">
+            <div class="scan-progress-bar">
+              <div class="scan-progress-fill" id="progressFill"></div>
+            </div>
+            <span class="scan-progress-pct" id="scanProgressPct">0%</span>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="scan-actions">
+            <button id="startScanBtn" class="btn-start-scan">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              Start Scan
+            </button>
+            <button id="stopScanBtn" class="btn-stop-scan" style="display:none">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+              </svg>
+              Stop
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature highlights row -->
+      <div class="scanner-features-row">
+        <div class="scanner-feature-card">
+          <div class="sf-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <div class="sf-title">Scans for</div>
+          <ul class="sf-list">
+            <li>Malicious files</li>
+            <li>Phishing links</li>
+            <li>Suspicious apps</li>
+            <li>Potentially unwanted programs (PUPs)</li>
+          </ul>
+        </div>
+        <div class="scanner-feature-card">
+          <div class="sf-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/>
+              <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="sf-title">AI-Powered</div>
+          <div class="sf-desc">Our AI engine detects new and emerging threats in real time for maximum protection.</div>
+        </div>
+        <div class="scanner-feature-card">
+          <div class="sf-icon" style="background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="sf-title">Fast &amp; Efficient</div>
+          <div class="sf-desc">Quick scans check critical areas in minutes without slowing you down.</div>
+        </div>
+        <div class="scanner-feature-card">
+          <div class="sf-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="sf-title">Private &amp; Secure</div>
+          <div class="sf-desc">Your scans are 100% private. We never collect or share your personal data.</div>
+        </div>
+      </div>
+
+      <!-- Tip + Schedule row -->
+      <div class="scanner-tip-row">
+        <div class="scanner-tip">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+          </svg>
+          <span><strong>Tip:</strong> Run a Full Scan regularly for complete protection.</span>
+        </div>
+        <button class="btn-schedule-scan" id="scheduleScanBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Schedule scan
+        </button>
+      </div>
+
+      <!-- ── SCAN RESULTS (shown after scan completes) ── -->
+      <div id="scanResultsSection" style="display:none">
+
+        <!-- Results header -->
+        <div class="scan-results-header" id="scanResultsHeader">
+          <!-- populated by JS -->
+        </div>
+
+        <!-- Threats found table -->
+        <div class="section-card" id="scanThreatsCard" style="display:none">
+          <div class="section-card-header">
+            <span class="section-card-title" id="scanThreatsTitle">Threats found</span>
+            <div style="display:flex;gap:8px">
+              <button class="dh-action-btn" id="scanQuarantineAllBtn" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Quarantine all
+              </button>
+              <button class="dh-action-btn" id="scanDeleteAllBtn" style="color:var(--red);border-color:rgba(240,82,82,0.3)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+                Delete all
+              </button>
+            </div>
+          </div>
+          <div id="scanThreatsList" class="scan-threats-list">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- Clean result -->
+        <div class="scan-clean-card" id="scanCleanCard" style="display:none">
+          <div class="scan-clean-icon">✅</div>
+          <div class="scan-clean-title">Your system is clean</div>
+          <div class="scan-clean-sub">No threats, malware, or suspicious files were found during this scan.</div>
+        </div>
+
+      </div><!-- end scanResultsSection -->
+
+    </div>
+
+    <!-- PAGE: DETECTION HISTORY -->
+    <div id="page-detection" class="page">
+
+      <!-- Header -->
+      <div class="dh-header">
+        <div>
+          <h1 class="dh-title">Detection History</h1>
+          <p class="dh-sub">View and manage threats that ShieldScan has detected on your device.</p>
+        </div>
+      </div>
+
+      <!-- Filter tabs + actions -->
+      <div class="dh-toolbar">
+        <div class="dh-tabs" id="dhTabs">
+          <button class="dh-tab active" data-filter="all">All Detections</button>
+          <button class="dh-tab" data-filter="quarantined">Quarantined</button>
+          <button class="dh-tab" data-filter="blocked">Blocked</button>
+          <button class="dh-tab" data-filter="allowed">Allowed</button>
+        </div>
+        <div class="dh-actions">
+          <button class="dh-action-btn" id="dhFilterBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+            Filters
+          </button>
+          <button class="dh-action-btn" id="dhExportBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="dh-table-wrap">
+        <!-- Column headers -->
+        <div class="dh-table-head">
+          <div class="dh-col dh-col-name">Threat name</div>
+          <div class="dh-col dh-col-type">Type</div>
+          <div class="dh-col dh-col-status">Status</div>
+          <div class="dh-col dh-col-date">Date detected</div>
+          <div class="dh-col dh-col-action">Action</div>
+        </div>
+
+        <!-- Rows -->
+        <div class="dh-table-body" id="dhTableBody">
+
+          <div class="dh-row" data-status="quarantined">
+            <div class="dh-col dh-col-name">
+              <div class="dh-threat-icon dh-icon-red">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="dh-threat-info">
+                <div class="dh-threat-name">Trojan.GenericKD.365</div>
+                <div class="dh-threat-path">C:\Users\User\Downloads\setup.exe</div>
+              </div>
+            </div>
+            <div class="dh-col dh-col-type"><span class="dh-type-pill trojan">Trojan</span></div>
+            <div class="dh-col dh-col-status"><span class="dh-status-pill quarantined">● Quarantined</span></div>
+            <div class="dh-col dh-col-date">May 9, 2026, 10:24 AM</div>
+            <div class="dh-col dh-col-action"><button class="dh-menu-btn" aria-label="Actions">⋮</button></div>
+          </div>
+
+          <div class="dh-row" data-status="blocked">
+            <div class="dh-col dh-col-name">
+              <div class="dh-threat-icon dh-icon-orange">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <div class="dh-threat-info">
+                <div class="dh-threat-name">Phishing: Fake Login Page</div>
+                <div class="dh-threat-path">https://secure-login-update.com</div>
+              </div>
+            </div>
+            <div class="dh-col dh-col-type"><span class="dh-type-pill phishing">Phishing</span></div>
+            <div class="dh-col dh-col-status"><span class="dh-status-pill blocked">● Blocked</span></div>
+            <div class="dh-col dh-col-date">May 9, 2026, 09:58 AM</div>
+            <div class="dh-col dh-col-action"><button class="dh-menu-btn" aria-label="Actions">⋮</button></div>
+          </div>
+
+          <div class="dh-row" data-status="quarantined">
+            <div class="dh-col dh-col-name">
+              <div class="dh-threat-icon dh-icon-orange">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="dh-threat-info">
+                <div class="dh-threat-name">Adware.BundleInstaller</div>
+                <div class="dh-threat-path">C:\Program Files\Installer\bundle.exe</div>
+              </div>
+            </div>
+            <div class="dh-col dh-col-type"><span class="dh-type-pill adware">Adware</span></div>
+            <div class="dh-col dh-col-status"><span class="dh-status-pill quarantined">● Quarantined</span></div>
+            <div class="dh-col dh-col-date">May 8, 2026, 08:17 PM</div>
+            <div class="dh-col dh-col-action"><button class="dh-menu-btn" aria-label="Actions">⋮</button></div>
+          </div>
+
+          <div class="dh-row" data-status="quarantined">
+            <div class="dh-col dh-col-name">
+              <div class="dh-threat-icon dh-icon-red">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <div class="dh-threat-info">
+                <div class="dh-threat-name">Malicious Script</div>
+                <div class="dh-threat-path">C:\Users\User\AppData\script.js</div>
+              </div>
+            </div>
+            <div class="dh-col dh-col-type"><span class="dh-type-pill malware">Malware</span></div>
+            <div class="dh-col dh-col-status"><span class="dh-status-pill quarantined">● Quarantined</span></div>
+            <div class="dh-col dh-col-date">May 8, 2026, 04:42 PM</div>
+            <div class="dh-col dh-col-action"><button class="dh-menu-btn" aria-label="Actions">⋮</button></div>
+          </div>
+
+          <div class="dh-row" data-status="allowed">
+            <div class="dh-col dh-col-name">
+              <div class="dh-threat-icon dh-icon-blue">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="dh-threat-info">
+                <div class="dh-threat-name">PUA.OptionalOffer</div>
+                <div class="dh-threat-path">C:\Users\User\Downloads\offer.exe</div>
+              </div>
+            </div>
+            <div class="dh-col dh-col-type"><span class="dh-type-pill pua">PUA</span></div>
+            <div class="dh-col dh-col-status"><span class="dh-status-pill allowed">● Allowed</span></div>
+            <div class="dh-col dh-col-date">May 7, 2026, 03:11 PM</div>
+            <div class="dh-col dh-col-action"><button class="dh-menu-btn" aria-label="Actions">⋮</button></div>
+          </div>
+
+          <div class="dh-row" data-status="blocked">
+            <div class="dh-col dh-col-name">
+              <div class="dh-threat-icon dh-icon-orange">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <div class="dh-threat-info">
+                <div class="dh-threat-name">Suspicious Website</div>
+                <div class="dh-threat-path">https://free-gift-card-now.xyz</div>
+              </div>
+            </div>
+            <div class="dh-col dh-col-type"><span class="dh-type-pill suspicious">Suspicious</span></div>
+            <div class="dh-col dh-col-status"><span class="dh-status-pill blocked">● Blocked</span></div>
+            <div class="dh-col dh-col-date">May 7, 2026, 11:05 AM</div>
+            <div class="dh-col dh-col-action"><button class="dh-menu-btn" aria-label="Actions">⋮</button></div>
+          </div>
+
+          <div class="dh-row" data-status="allowed">
+            <div class="dh-col dh-col-name">
+              <div class="dh-threat-icon dh-icon-blue">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="dh-threat-info">
+                <div class="dh-threat-name">Tool.HackTool.Keygen</div>
+                <div class="dh-threat-path">C:\Users\User\Desktop\keygen.exe</div>
+              </div>
+            </div>
+            <div class="dh-col dh-col-type"><span class="dh-type-pill hacktool">HackTool</span></div>
+            <div class="dh-col dh-col-status"><span class="dh-status-pill allowed">● Allowed</span></div>
+            <div class="dh-col dh-col-date">May 6, 2026, 07:32 PM</div>
+            <div class="dh-col dh-col-action"><button class="dh-menu-btn" aria-label="Actions">⋮</button></div>
+          </div>
+
+        </div><!-- end dh-table-body -->
+
+        <!-- Pagination -->
+        <div class="dh-pagination">
+          <span class="dh-pag-info" id="dhPagInfo">Showing 1 to 7 of 32 detections</span>
+          <div class="dh-pag-btns">
+            <button class="dh-pag-btn" disabled>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="dh-pag-btn active">1</button>
+            <button class="dh-pag-btn">2</button>
+            <button class="dh-pag-btn">3</button>
+            <span class="dh-pag-ellipsis">…</span>
+            <button class="dh-pag-btn">5</button>
+            <button class="dh-pag-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div><!-- end dh-table-wrap -->
+    </div>
+
+    <!-- PAGE: THREAT HISTORY -->
+    <div id="page-threats" class="page">
+      <div class="generic-header">
+        <h1 class="generic-title">Threat History</h1>
+        <p class="generic-sub">All threats detected and blocked by ShieldScan on your device.</p>
+      </div>
+
+      <!-- Stats row -->
+      <div class="th-stats-row">
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(240,82,82,0.12);border-color:rgba(240,82,82,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="th-stat-val" id="thTotalThreats">—</div>
+          <div class="th-stat-label">Total threats</div>
+        </div>
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="th-stat-val" id="thQuarantined">—</div>
+          <div class="th-stat-label">Quarantined</div>
+        </div>
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(240,82,82,0.12);border-color:rgba(240,82,82,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <div class="th-stat-val" id="thBlocked">—</div>
+          <div class="th-stat-label">Blocked</div>
+        </div>
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="th-stat-val" id="thResolved">—</div>
+          <div class="th-stat-label">Resolved</div>
+        </div>
+      </div>
+
+      <!-- Filter + Export -->
+      <div class="dh-toolbar">
+        <div class="dh-tabs" id="thTabs">
+          <button class="dh-tab active" data-thfilter="all">All</button>
+          <button class="dh-tab" data-thfilter="malware">Malware</button>
+          <button class="dh-tab" data-thfilter="phishing">Phishing</button>
+          <button class="dh-tab" data-thfilter="pua">PUA</button>
+          <button class="dh-tab" data-thfilter="suspicious">Suspicious</button>
+        </div>
+        <div class="dh-actions">
+          <button class="dh-action-btn" id="thRefreshBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+            Refresh
+          </button>
+          <button class="dh-action-btn" id="thExportBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="dh-table-wrap">
+        <div class="dh-table-head">
+          <div class="dh-col dh-col-name">Threat name</div>
+          <div class="dh-col dh-col-type">Type</div>
+          <div class="dh-col dh-col-status">Status</div>
+          <div class="dh-col dh-col-date">Date detected</div>
+          <div class="dh-col dh-col-action">Action</div>
+        </div>
+        <div class="dh-table-body" id="thTableBody">
+          <div style="padding:40px;text-align:center;color:var(--text2)">
+            <div style="font-size:24px;margin-bottom:8px">🔄</div>
+            Loading threat history from API…
+          </div>
+        </div>
+        <div class="dh-pagination">
+          <span class="dh-pag-info" id="thPagInfo">Loading…</span>
+          <div class="dh-pag-btns" id="thPagBtns"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: ADS BLOCKED -->
+    <div id="page-adsblocked" class="page">
+      <div class="generic-header">
+        <h1 class="generic-title">Ads Blocked</h1>
+        <p class="generic-sub">Trackers, ads, and malicious scripts blocked while you browse.</p>
+      </div>
+
+      <!-- Stats row -->
+      <div class="th-stats-row">
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <div class="th-stat-val" id="abTotalAds">—</div>
+          <div class="th-stat-label">Ads blocked</div>
+        </div>
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="th-stat-val" id="abTrackers">—</div>
+          <div class="th-stat-label">Trackers blocked</div>
+        </div>
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(240,82,82,0.12);border-color:rgba(240,82,82,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          </div>
+          <div class="th-stat-val" id="abMalicious">—</div>
+          <div class="th-stat-label">Malicious scripts</div>
+        </div>
+        <div class="th-stat-card">
+          <div class="th-stat-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="th-stat-val" id="abTimeSaved">—</div>
+          <div class="th-stat-label">Time saved</div>
+        </div>
+      </div>
+
+      <!-- Top blocked domains -->
+      <div class="generic-grid">
+        <div class="section-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Top blocked domains</span>
+            <button class="dh-action-btn" id="abRefreshBtn" style="font-size:11px;padding:5px 10px">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+              Refresh
+            </button>
+          </div>
+          <div id="abDomainList" class="ab-domain-list">
+            <div style="padding:32px;text-align:center;color:var(--text2)">Loading…</div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Blocked by category</span>
+          </div>
+          <div id="abCategoryList" class="ab-category-list">
+            <div style="padding:32px;text-align:center;color:var(--text2)">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent blocked activity -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <span class="section-card-title">Recent blocked requests</span>
+          <span class="dh-pag-info" id="abRecentInfo"></span>
+        </div>
+        <div id="abRecentList" class="ab-recent-list">
+          <div style="padding:32px;text-align:center;color:var(--text2)">Loading…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: REAL-TIME PROTECTION -->
+    <div id="page-realtime" class="page">
+
+      <!-- Header -->
+      <div class="rt-header">
+        <h1 class="rt-title">Real-Time Protection</h1>
+        <p class="rt-sub">Continuously protects your device from threats in real time.</p>
+      </div>
+
+      <!-- Status banner -->
+      <div class="rt-status-banner">
+        <div class="rt-banner-left">
+          <div class="rt-shield-wrap">
+            <div class="rt-shield-glow"></div>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"
+                    fill="rgba(79,142,247,0.25)" stroke="#4f8ef7" stroke-width="1.5"/>
+              <path d="M9 12l2 2 4-4" stroke="#2dce89" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="rt-banner-text">
+            <div class="rt-banner-title">Real-Time Protection is <span style="color:var(--green)">Active</span></div>
+            <div class="rt-banner-sub">ShieldScan is monitoring your system and blocking threats in real time to keep you safe.</div>
+          </div>
+        </div>
+        <div class="rt-banner-right">
+          <div class="rt-banner-status-label">Protection status</div>
+          <div class="rt-status-pill">
+            <span class="rt-status-dot"></span>
+            Active
+          </div>
+        </div>
+        <!-- decorative wave lines -->
+        <div class="rt-banner-deco" aria-hidden="true">
+          <svg width="180" height="60" viewBox="0 0 180 60" fill="none" opacity="0.18">
+            <path d="M0 30 Q30 10 60 30 Q90 50 120 30 Q150 10 180 30" stroke="#4f8ef7" stroke-width="2" fill="none"/>
+            <path d="M0 40 Q30 20 60 40 Q90 60 120 40 Q150 20 180 40" stroke="#4f8ef7" stroke-width="1.5" fill="none"/>
+            <path d="M0 20 Q30 0 60 20 Q90 40 120 20 Q150 0 180 20" stroke="#4f8ef7" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Two-column: Protection features + Real-time activity -->
+      <div class="rt-main-grid">
+
+        <!-- Left: Protection features -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Protection features</span>
+          </div>
+
+          <div class="rt-feature-list">
+            <div class="rt-feature-row">
+              <div class="rt-feat-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 3h18v13H3z"/><path d="M8 21h8M12 17v4"/>
+                </svg>
+              </div>
+              <div class="rt-feat-info">
+                <div class="rt-feat-name">File System Protection</div>
+                <div class="rt-feat-desc">Scans files when they are opened, created, or modified.</div>
+              </div>
+              <div class="rt-toggle-wrap">
+                <span class="rt-toggle-label">On</span>
+                <label class="rt-toggle" aria-label="File System Protection toggle">
+                  <input type="checkbox" checked class="rt-toggle-input"/>
+                  <span class="rt-toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="rt-feature-row">
+              <div class="rt-feat-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <div class="rt-feat-info">
+                <div class="rt-feat-name">Web Protection</div>
+                <div class="rt-feat-desc">Blocks access to malicious and phishing websites.</div>
+              </div>
+              <div class="rt-toggle-wrap">
+                <span class="rt-toggle-label">On</span>
+                <label class="rt-toggle" aria-label="Web Protection toggle">
+                  <input type="checkbox" checked class="rt-toggle-input"/>
+                  <span class="rt-toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="rt-feature-row">
+              <div class="rt-feat-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </div>
+              <div class="rt-feat-info">
+                <div class="rt-feat-name">Behavior Protection</div>
+                <div class="rt-feat-desc">Monitors suspicious behavior and blocks potential threats.</div>
+              </div>
+              <div class="rt-toggle-wrap">
+                <span class="rt-toggle-label">On</span>
+                <label class="rt-toggle" aria-label="Behavior Protection toggle">
+                  <input type="checkbox" checked class="rt-toggle-input"/>
+                  <span class="rt-toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="rt-feature-row">
+              <div class="rt-feat-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <div class="rt-feat-info">
+                <div class="rt-feat-name">Ransomware Protection</div>
+                <div class="rt-feat-desc">Detects and blocks ransomware behavior in real time.</div>
+              </div>
+              <div class="rt-toggle-wrap">
+                <span class="rt-toggle-label">On</span>
+                <label class="rt-toggle" aria-label="Ransomware Protection toggle">
+                  <input type="checkbox" checked class="rt-toggle-input"/>
+                  <span class="rt-toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="rt-feature-row">
+              <div class="rt-feat-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                </svg>
+              </div>
+              <div class="rt-feat-info">
+                <div class="rt-feat-name">USB Drive Protection</div>
+                <div class="rt-feat-desc">Scans USB devices and blocks threats from external drives.</div>
+              </div>
+              <div class="rt-toggle-wrap">
+                <span class="rt-toggle-label">On</span>
+                <label class="rt-toggle" aria-label="USB Drive Protection toggle">
+                  <input type="checkbox" checked class="rt-toggle-input"/>
+                  <span class="rt-toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="rt-feature-row">
+              <div class="rt-feat-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+              </div>
+              <div class="rt-feat-info">
+                <div class="rt-feat-name">Download Protection</div>
+                <div class="rt-feat-desc">Scans downloaded files and blocks dangerous downloads.</div>
+              </div>
+              <div class="rt-toggle-wrap">
+                <span class="rt-toggle-label">On</span>
+                <label class="rt-toggle" aria-label="Download Protection toggle">
+                  <input type="checkbox" checked class="rt-toggle-input"/>
+                  <span class="rt-toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Exclusions footer -->
+          <div class="rt-exclusions">
+            <div class="rt-excl-info">
+              <div class="rt-excl-title">Exclusions</div>
+              <div class="rt-excl-sub">Manage items that will be excluded from real-time scanning.</div>
+            </div>
+            <button class="rt-excl-btn">Manage exclusions</button>
+          </div>
+        </div>
+
+        <!-- Right: Real-time activity -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Real-time activity</span>
+            <div class="rt-activity-filter">
+              <span style="font-size:12px;color:var(--text2)">All events</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="rt-activity-list" id="rtActivityList">
+
+            <div class="rt-activity-item">
+              <div class="rt-act-icon rt-act-green">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="rt-act-info">
+                <div class="rt-act-title">Threat blocked</div>
+                <div class="rt-act-sub">Malicious file detected and blocked</div>
+                <div class="rt-act-path">C:\Users\User\Downloads\setup.exe</div>
+              </div>
+              <div class="rt-act-time">10:24 AM</div>
+            </div>
+
+            <div class="rt-activity-item">
+              <div class="rt-act-icon rt-act-yellow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <div class="rt-act-info">
+                <div class="rt-act-title">Suspicious behavior detected</div>
+                <div class="rt-act-sub">Blocked suspicious registry modification</div>
+                <div class="rt-act-path">HKLM\SOFTWARE\Microsoft\Windows\Run</div>
+              </div>
+              <div class="rt-act-time">10:18 AM</div>
+            </div>
+
+            <div class="rt-activity-item">
+              <div class="rt-act-icon rt-act-green">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <div class="rt-act-info">
+                <div class="rt-act-title">Web threat blocked</div>
+                <div class="rt-act-sub">Access to phishing site prevented</div>
+                <div class="rt-act-path">bad-site.example.com</div>
+              </div>
+              <div class="rt-act-time">10:15 AM</div>
+            </div>
+
+            <div class="rt-activity-item">
+              <div class="rt-act-icon rt-act-blue">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+              </div>
+              <div class="rt-act-info">
+                <div class="rt-act-title">File scanned</div>
+                <div class="rt-act-sub">File is safe</div>
+                <div class="rt-act-path">C:\Users\User\Documents\report.pdf</div>
+              </div>
+              <div class="rt-act-time">10:10 AM</div>
+            </div>
+
+            <div class="rt-activity-item">
+              <div class="rt-act-icon rt-act-green">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="rt-act-info">
+                <div class="rt-act-title">Threat blocked</div>
+                <div class="rt-act-sub">Malware detected and quarantined</div>
+                <div class="rt-act-path">C:\Users\User\AppData\malware.exe</div>
+              </div>
+              <div class="rt-act-time">10:05 AM</div>
+            </div>
+
+          </div>
+
+          <div class="rt-view-full">
+            <a href="#" class="rt-view-full-link" data-action="navigate" data-page="page-detection">
+              View full activity
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- end rt-main-grid -->
+    </div>
+
+    <!-- PAGE: VPN -->
+    <div id="page-vpn" class="page">
+      <div class="generic-header">
+        <h1 class="generic-title">VPN</h1>
+        <p class="generic-sub">Browse the internet privately and securely with ShieldScan VPN.</p>
+      </div>
+
+      <!-- ── DISCONNECTED STATE ── -->
+      <div id="vpn-disconnected" class="vpn-state-card">
+        <div class="vpn-state-left">
+          <div class="vpn-circle-wrap" id="vpnCircleWrap">
+            <div class="vpn-circle-ring vpn-ring-outer"></div>
+            <div class="vpn-circle-ring vpn-ring-mid"></div>
+            <div class="vpn-circle-core">
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"
+                      fill="rgba(79,142,247,0.25)" stroke="#4f8ef7" stroke-width="1.5"/>
+                <path d="M9 12l2 2 4-4" stroke="#2dce89" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="vpn-state-info">
+          <div class="vpn-state-title">Your connection is <span id="vpnConnLabel" style="color:var(--red)">not protected</span></div>
+          <div id="vpnConnDesc" class="vpn-state-sub">VPN is currently disabled. Your real IP address is visible.</div>
+          <div class="vpn-conn-status-row">
+            <span id="vpnConnDot" class="vpn-conn-dot" style="background:var(--red)"></span>
+            <span id="vpnConnStatus" style="font-size:13px;font-weight:700;color:var(--red)">Disconnected</span>
+          </div>
+        </div>
+        <div class="vpn-state-actions">
+          <button id="vpnToggleBtn" class="btn-vpn-toggle">Turn on</button>
+          <div class="vpn-is-off-label" id="vpnIsOffLabel">VPN is OFF</div>
+        </div>
+      </div>
+
+      <!-- ── CONNECTED STATE ── -->
+      <div id="vpn-connected" class="vpn-connected-card" style="display:none">
+        <div class="vpn-conn-left">
+          <div class="vpn-conn-circle">
+            <div class="vpn-conn-ring vpn-conn-ring-outer"></div>
+            <div class="vpn-conn-ring vpn-conn-ring-mid"></div>
+            <div class="vpn-conn-core">
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="11" width="18" height="11" rx="2" fill="rgba(79,142,247,0.3)" stroke="#4f8ef7" stroke-width="1.5"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#4f8ef7" stroke-width="1.5"/>
+                <circle cx="12" cy="16" r="1.5" fill="#2dce89"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="vpn-conn-info">
+          <div class="vpn-conn-title">Your connection is <span style="color:var(--green)">protected</span></div>
+          <div class="vpn-conn-sub">ShieldScan VPN is encrypting your internet traffic and hiding your IP address.</div>
+          <div class="vpn-conn-meta">
+            <div class="vpn-meta-item">
+              <span class="vpn-meta-dot-green"></span>
+              <span class="vpn-meta-label" id="vpnConnectedLabel">Connected</span>
+              <span class="vpn-meta-timer" id="vpnTimer">00:00:00</span>
+            </div>
+          </div>
+          <div class="vpn-ip-row">
+            <div class="vpn-ip-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span class="vpn-ip-label">Your IP address</span>
+              <span class="vpn-ip-val" id="vpnRealIP">103.22.45.67</span>
+            </div>
+            <div class="vpn-ip-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/></svg>
+              <span class="vpn-ip-label">VPN IP address</span>
+              <span class="vpn-ip-val" id="vpnVpnIP" style="color:var(--accent)">185.213.154.23</span>
+            </div>
+          </div>
+        </div>
+        <button id="vpnDisconnectBtn" class="btn-vpn-disconnect">Disconnect</button>
+      </div>
+
+      <!-- ── BOTTOM GRID: Location list + Quick connect + Features + Status ── -->
+      <div class="vpn-bottom-grid">
+
+        <!-- Left: Location list -->
+        <div class="section-card vpn-location-card">
+          <div class="section-card-header" style="flex-direction:column;align-items:flex-start;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+              <span class="section-card-title">VPN location</span>
+            </div>
+            <!-- Search -->
+            <div class="vpn-search-wrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" id="vpnSearchInput" placeholder="Search for a location" class="vpn-search-input"/>
+            </div>
+            <!-- Location tabs -->
+            <div class="vpn-loc-tabs" id="vpnLocTabs">
+              <button class="vpn-loc-tab active" data-loctab="all">All locations</button>
+              <button class="vpn-loc-tab" data-loctab="favorites">Favorites</button>
+              <button class="vpn-loc-tab" data-loctab="streaming">Streaming</button>
+              <button class="vpn-loc-tab" data-loctab="p2p">P2P</button>
+            </div>
+          </div>
+
+          <div class="vpn-server-list" id="vpnServerList">
+            <!-- Optimal -->
+            <div class="vpn-server-row vpn-optimal" data-serverid="optimal">
+              <div class="vpn-server-flag-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div class="vpn-server-info">
+                <div class="vpn-server-name">Optimal location</div>
+                <div class="vpn-server-ping">Let ShieldScan choose the best server</div>
+              </div>
+              <button class="vpn-server-connect-btn" data-serverid="optimal">Connect</button>
+            </div>
+            <!-- US -->
+            <div class="vpn-server-row" data-serverid="us-east">
+              <div class="vpn-server-flag-wrap"><span class="vpn-flag">🇺🇸</span></div>
+              <div class="vpn-server-info"><div class="vpn-server-name">United States</div><div class="vpn-server-ping">New York</div></div>
+              <span class="vpn-ping-badge">32 ms</span>
+              <button class="vpn-fav-btn" aria-label="Favorite">☆</button>
+            </div>
+            <!-- UK -->
+            <div class="vpn-server-row" data-serverid="eu-uk">
+              <div class="vpn-server-flag-wrap"><span class="vpn-flag">🇬🇧</span></div>
+              <div class="vpn-server-info"><div class="vpn-server-name">United Kingdom</div><div class="vpn-server-ping">London</div></div>
+              <span class="vpn-ping-badge">48 ms</span>
+              <button class="vpn-fav-btn" aria-label="Favorite">☆</button>
+            </div>
+            <!-- Canada -->
+            <div class="vpn-server-row" data-serverid="ca">
+              <div class="vpn-server-flag-wrap"><span class="vpn-flag">🇨🇦</span></div>
+              <div class="vpn-server-info"><div class="vpn-server-name">Canada</div><div class="vpn-server-ping">Toronto</div></div>
+              <span class="vpn-ping-badge">52 ms</span>
+              <button class="vpn-fav-btn" aria-label="Favorite">☆</button>
+            </div>
+            <!-- Germany -->
+            <div class="vpn-server-row" data-serverid="eu-de">
+              <div class="vpn-server-flag-wrap"><span class="vpn-flag">🇩🇪</span></div>
+              <div class="vpn-server-info"><div class="vpn-server-name">Germany</div><div class="vpn-server-ping">Frankfurt</div></div>
+              <span class="vpn-ping-badge">60 ms</span>
+              <button class="vpn-fav-btn" aria-label="Favorite">☆</button>
+            </div>
+            <!-- Japan -->
+            <div class="vpn-server-row" data-serverid="asia-jp">
+              <div class="vpn-server-flag-wrap"><span class="vpn-flag">🇯🇵</span></div>
+              <div class="vpn-server-info"><div class="vpn-server-name">Japan</div><div class="vpn-server-ping">Tokyo</div></div>
+              <span class="vpn-ping-badge">92 ms</span>
+              <button class="vpn-fav-btn" aria-label="Favorite">☆</button>
+            </div>
+            <!-- Singapore -->
+            <div class="vpn-server-row" data-serverid="asia-sg">
+              <div class="vpn-server-flag-wrap"><span class="vpn-flag">🇸🇬</span></div>
+              <div class="vpn-server-info"><div class="vpn-server-name">Singapore</div><div class="vpn-server-ping">Singapore</div></div>
+              <span class="vpn-ping-badge">78 ms</span>
+              <button class="vpn-fav-btn" aria-label="Favorite">☆</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Quick connect + Features + Status -->
+        <div class="vpn-right-col">
+
+          <!-- Quick connect -->
+          <div class="section-card">
+            <div class="section-card-header"><span class="section-card-title">Quick connect</span></div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+              <p style="font-size:12.5px;color:var(--text2);margin:0">Connect to the fastest server based on your location.</p>
+              <button class="btn-quick-connect" id="vpnQuickConnectBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                Quick connect
+              </button>
+            </div>
+          </div>
+
+          <!-- VPN features -->
+          <div class="section-card">
+            <div class="section-card-header"><span class="section-card-title">VPN features</span></div>
+            <div class="vpn-features-list">
+              <div class="vpn-feature-item">
+                <div class="vpn-feat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                <div class="vpn-feat-info"><div class="vpn-feat-name">AES-256 encryption</div><div class="vpn-feat-desc">Military-grade encryption</div></div>
+              </div>
+              <div class="vpn-feature-item">
+                <div class="vpn-feat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                <div class="vpn-feat-info"><div class="vpn-feat-name">No-logs policy</div><div class="vpn-feat-desc">Your activity stays private</div></div>
+              </div>
+              <div class="vpn-feature-item">
+                <div class="vpn-feat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div class="vpn-feat-info"><div class="vpn-feat-name">Kill switch</div><div class="vpn-feat-desc">Blocks internet if VPN disconnects</div></div>
+              </div>
+              <div class="vpn-feature-item">
+                <div class="vpn-feat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/></svg></div>
+                <div class="vpn-feat-info"><div class="vpn-feat-name">DNS leak protection</div><div class="vpn-feat-desc">Prevent DNS leaks and stay private</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VPN status (shown when connected) -->
+          <div class="section-card" id="vpnStatusCard" style="display:none">
+            <div class="section-card-header"><span class="section-card-title">VPN status</span></div>
+            <div class="vpn-status-list">
+              <div class="vpn-status-row"><span class="vpn-status-label">Status</span><span class="vpn-status-val" id="vpnStatusVal" style="color:var(--green)">Connected</span></div>
+              <div class="vpn-status-row"><span class="vpn-status-label">Location</span><span class="vpn-status-val" id="vpnStatusLoc">United States, New York 🇺🇸</span></div>
+              <div class="vpn-status-row"><span class="vpn-status-label">IP address</span><span class="vpn-status-val" id="vpnStatusIP">185.213.154.23</span></div>
+              <div class="vpn-status-row"><span class="vpn-status-label">Data transferred</span><span class="vpn-status-val" id="vpnStatusData">0 MB</span></div>
+            </div>
+            <div style="padding:10px 16px;border-top:1px solid var(--border)">
+              <a href="#" class="rt-view-full-link" style="font-size:12.5px">View VPN settings <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </div>
+          </div>
+
+        </div><!-- end vpn-right-col -->
+      </div><!-- end vpn-bottom-grid -->
+    </div>
+
+    <!-- PAGE: PRIVACY -->
+    <div id="page-privacy" class="page">
+
+      <!-- Header -->
+      <div class="generic-header">
+        <h1 class="generic-title">Privacy</h1>
+        <p class="generic-sub">Protect your personal data and keep your online activity private.</p>
+      </div>
+
+      <!-- Status banner -->
+      <div class="priv-status-banner">
+        <div class="priv-banner-left">
+          <div class="priv-shield-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"
+                    fill="rgba(79,142,247,0.25)" stroke="#4f8ef7" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="2.5" fill="#2dce89"/>
+            </svg>
+          </div>
+          <div>
+            <div class="priv-banner-title">Your privacy is <span style="color:var(--green)">protected</span></div>
+            <div class="priv-banner-sub">ShieldScan helps you keep your data private and prevent tracking and data leaks.</div>
+          </div>
+        </div>
+        <!-- Decorative lock illustration -->
+        <div class="priv-banner-deco" aria-hidden="true">
+          <div class="priv-deco-circle">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="11" width="18" height="11" rx="2" fill="rgba(79,142,247,0.3)" stroke="#4f8ef7" stroke-width="1.5"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#4f8ef7" stroke-width="1.5"/>
+              <circle cx="12" cy="16" r="1.5" fill="#2dce89"/>
+            </svg>
+          </div>
+          <div class="priv-deco-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2dce89" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Privacy protection cards -->
+      <div>
+        <div class="priv-section-label">Privacy protection</div>
+        <div class="priv-cards-grid">
+
+          <div class="priv-card">
+            <div class="priv-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                <circle cx="12" cy="8" r="1.5" fill="var(--accent)"/>
+              </svg>
+            </div>
+            <div class="priv-card-name">Webcam Protection</div>
+            <div class="priv-card-desc">Blocks unauthorized access to your webcam.</div>
+            <div class="priv-card-footer">
+              <span class="priv-status-pill protected">
+                <span class="priv-status-dot"></span>Protected
+              </span>
+              <button class="priv-arrow-btn" aria-label="Details">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="priv-card">
+            <div class="priv-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="22"/>
+              </svg>
+            </div>
+            <div class="priv-card-name">Microphone Protection</div>
+            <div class="priv-card-desc">Blocks unauthorized access to your microphone.</div>
+            <div class="priv-card-footer">
+              <span class="priv-status-pill protected">
+                <span class="priv-status-dot"></span>Protected
+              </span>
+              <button class="priv-arrow-btn" aria-label="Details">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="priv-card">
+            <div class="priv-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="priv-card-name">Tracking Protection</div>
+            <div class="priv-card-desc">Blocks trackers from collecting your online activity.</div>
+            <div class="priv-card-footer">
+              <span class="priv-status-pill protected">
+                <span class="priv-status-dot"></span>Protected
+              </span>
+              <button class="priv-arrow-btn" aria-label="Details">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="priv-card">
+            <div class="priv-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
+              </svg>
+            </div>
+            <div class="priv-card-name">Ad &amp; Cookie Blocking</div>
+            <div class="priv-card-desc">Blocks intrusive ads and tracking cookies.</div>
+            <div class="priv-card-footer">
+              <span class="priv-status-pill protected">
+                <span class="priv-status-dot"></span>Protected
+              </span>
+              <button class="priv-arrow-btn" aria-label="Details">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="priv-card">
+            <div class="priv-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </div>
+            <div class="priv-card-name">Private Browsing Helper</div>
+            <div class="priv-card-desc">Cleans your traces and keeps your browsing private.</div>
+            <div class="priv-card-footer">
+              <span class="priv-status-pill protected">
+                <span class="priv-status-dot"></span>Protected
+              </span>
+              <button class="priv-arrow-btn" aria-label="Details">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="priv-card">
+            <div class="priv-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              </svg>
+            </div>
+            <div class="priv-card-name">Data Leak Monitor</div>
+            <div class="priv-card-desc">Monitors the dark web for leaked personal information.</div>
+            <div class="priv-card-footer">
+              <span class="priv-status-pill monitoring">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spinRing 2s linear infinite"><path d="M21 12a9 9 0 1 1-9-9"/></svg>
+                Monitoring
+              </span>
+              <button class="priv-arrow-btn" aria-label="Details">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Privacy insights -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <span class="section-card-title">Privacy insights</span>
+        </div>
+        <div class="priv-insights-row">
+          <div class="priv-insight-item">
+            <div class="priv-insight-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="priv-insight-val">1,248</div>
+            <div class="priv-insight-label">Tracking attempts blocked</div>
+            <div class="priv-insight-period">This week</div>
+          </div>
+          <div class="priv-insight-item">
+            <div class="priv-insight-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/>
+              </svg>
+            </div>
+            <div class="priv-insight-val">842</div>
+            <div class="priv-insight-label">Cookies blocked</div>
+            <div class="priv-insight-period">This week</div>
+          </div>
+          <div class="priv-insight-item">
+            <div class="priv-insight-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div class="priv-insight-val">32</div>
+            <div class="priv-insight-label">Privacy risks prevented</div>
+            <div class="priv-insight-period">This week</div>
+          </div>
+          <div class="priv-insight-item">
+            <div class="priv-insight-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div class="priv-insight-val">0</div>
+            <div class="priv-insight-label">Data leaks detected</div>
+            <div class="priv-insight-period">This week</div>
+          </div>
+        </div>
+        <div class="priv-report-row">
+          <a href="#" class="rt-view-full-link">
+            View detailed privacy report
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE: IDENTITY -->
+    <div id="page-identity" class="page">
+
+      <!-- Header -->
+      <div class="generic-header">
+        <h1 class="generic-title">Identity</h1>
+        <p class="generic-sub">Monitor and protect your personal information from identity theft and data breaches.</p>
+      </div>
+
+      <!-- Status banner -->
+      <div class="id-status-banner">
+        <div class="id-banner-left">
+          <div class="id-shield-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"
+                    fill="rgba(79,142,247,0.25)" stroke="#4f8ef7" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="2.5" fill="#4f8ef7"/>
+            </svg>
+          </div>
+          <div>
+            <div class="id-banner-title">Your identity is <span style="color:var(--accent)">monitored</span></div>
+            <div class="id-banner-sub">ShieldScan continuously monitors the dark web and alerts you if your personal information is found.</div>
+          </div>
+        </div>
+        <div class="id-banner-status">
+          <span class="id-banner-status-label">Identity protection</span>
+          <span class="id-active-pill">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block"></span>
+            Active
+          </span>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="id-stats-row">
+        <div class="id-stat-item">
+          <div class="id-stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="id-stat-val">4</div>
+          <div class="id-stat-label">Data breaches monitored</div>
+        </div>
+        <div class="id-stat-item">
+          <div class="id-stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+              <circle cx="12" cy="8" r="4"/><path d="M4 22c2.5-5 13.5-5 16 0"/>
+            </svg>
+          </div>
+          <div class="id-stat-val">7</div>
+          <div class="id-stat-label">Personal info monitored</div>
+        </div>
+        <div class="id-stat-item">
+          <div class="id-stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </div>
+          <div class="id-stat-val">0</div>
+          <div class="id-stat-label">Alerts (last 30 days)</div>
+        </div>
+        <div class="id-stat-item">
+          <div class="id-stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="id-stat-val" style="color:var(--green)">All good</div>
+          <div class="id-stat-label">No identity threats detected</div>
+        </div>
+      </div>
+
+      <!-- Main 2-col grid -->
+      <div class="id-main-grid">
+
+        <!-- Left: Information being monitored -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <span class="section-card-title">Information being monitored</span>
+          </div>
+          <div class="id-monitor-list">
+
+            <div class="id-monitor-row">
+              <div class="id-monitor-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="id-monitor-info">
+                <div class="id-monitor-name">Email addresses</div>
+                <div class="id-monitor-desc">Monitors if your email appears in data breaches.</div>
+              </div>
+              <span class="id-monitoring-pill">Monitoring <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+
+            <div class="id-monitor-row">
+              <div class="id-monitor-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+              <div class="id-monitor-info">
+                <div class="id-monitor-name">Phone numbers</div>
+                <div class="id-monitor-desc">Monitors if your phone number is exposed online.</div>
+              </div>
+              <span class="id-monitoring-pill">Monitoring <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+
+            <div class="id-monitor-row">
+              <div class="id-monitor-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <circle cx="12" cy="8" r="4"/><path d="M4 22c2.5-5 13.5-5 16 0"/>
+                </svg>
+              </div>
+              <div class="id-monitor-info">
+                <div class="id-monitor-name">Personal details</div>
+                <div class="id-monitor-desc">Monitors your name, date of birth, and addresses.</div>
+              </div>
+              <span class="id-monitoring-pill">Monitoring <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+
+            <div class="id-monitor-row">
+              <div class="id-monitor-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+              </div>
+              <div class="id-monitor-info">
+                <div class="id-monitor-name">ID numbers</div>
+                <div class="id-monitor-desc">Monitors for SSN, national ID, and driver's license.</div>
+              </div>
+              <span class="id-monitoring-pill">Monitoring <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+
+            <div class="id-monitor-row">
+              <div class="id-monitor-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+              </div>
+              <div class="id-monitor-info">
+                <div class="id-monitor-name">Financial information</div>
+                <div class="id-monitor-desc">Monitors for leaked credit cards and bank accounts.</div>
+              </div>
+              <span class="id-monitoring-pill">Monitoring <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+
+            <div class="id-monitor-row">
+              <div class="id-monitor-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div class="id-monitor-info">
+                <div class="id-monitor-name">Usernames</div>
+                <div class="id-monitor-desc">Monitors your usernames across the web.</div>
+              </div>
+              <span class="id-monitoring-pill">Monitoring <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+
+          </div>
+
+          <!-- How it works footer -->
+          <div class="id-how-it-works">
+            <div class="id-how-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+              </svg>
+            </div>
+            <div>
+              <div class="id-how-title">How it works</div>
+              <div class="id-how-desc">We scan the dark web, hacker forums, and breached databases 24/7. You'll be alerted if your info is found.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Recent activity + Tips -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+
+          <!-- Recent activity -->
+          <div class="section-card">
+            <div class="section-card-header">
+              <span class="section-card-title">Recent activity</span>
+            </div>
+            <div class="id-activity-list">
+
+              <div class="id-activity-row">
+                <div class="id-act-icon id-act-green">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="id-act-info">
+                  <div class="id-act-title">Monitoring started</div>
+                  <div class="id-act-sub">We're now monitoring your identity</div>
+                </div>
+                <div class="id-act-date">May 10, 2026</div>
+              </div>
+
+              <div class="id-activity-row">
+                <div class="id-act-icon id-act-blue">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div class="id-act-info">
+                  <div class="id-act-title">Email added</div>
+                  <div class="id-act-sub">test***@email.com is now monitored</div>
+                </div>
+                <div class="id-act-date">May 10, 2026</div>
+              </div>
+
+              <div class="id-activity-row">
+                <div class="id-act-icon id-act-blue">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div class="id-act-info">
+                  <div class="id-act-title">Phone number added</div>
+                  <div class="id-act-sub">+63 9** *** **** is now monitored</div>
+                </div>
+                <div class="id-act-date">May 10, 2026</div>
+              </div>
+
+              <div class="id-activity-row">
+                <div class="id-act-icon id-act-blue">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="8" r="4"/><path d="M4 22c2.5-5 13.5-5 16 0"/>
+                  </svg>
+                </div>
+                <div class="id-act-info">
+                  <div class="id-act-title">Personal info added</div>
+                  <div class="id-act-sub">Your personal details are now monitored</div>
+                </div>
+                <div class="id-act-date">May 10, 2026</div>
+              </div>
+
+            </div>
+            <div class="rt-view-full">
+              <a href="#" class="rt-view-full-link">
+                View full activity
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Tips to stay safe -->
+          <div class="section-card">
+            <div class="section-card-header">
+              <span class="section-card-title">Tips to stay safe</span>
+            </div>
+            <div class="id-tips-list">
+              <div class="id-tip-item">
+                <div class="id-tip-dot"></div>
+                <span>Use strong, unique passwords</span>
+              </div>
+              <div class="id-tip-item">
+                <div class="id-tip-dot"></div>
+                <span>Enable two-factor authentication</span>
+              </div>
+              <div class="id-tip-item">
+                <div class="id-tip-dot"></div>
+                <span>Avoid sharing personal info online</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- end id-main-grid -->
+    </div>
+
+    <!-- PAGE: TOOLS -->
+    <div id="page-tools" class="page">
+
+      <div class="generic-header">
+        <h1 class="generic-title">Tools</h1>
+        <p class="generic-sub">Powerful tools to optimize your device, protect your data, and stay secure.</p>
+      </div>
+
+      <!-- 2-column tool list -->
+      <div class="tools-list-grid" id="toolsListGrid">
+
+        <!-- Row 1 -->
+        <div class="tool-list-item" data-tool="system-cleanup">
+          <div class="tool-list-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">System Cleanup</div>
+            <div class="tool-list-desc">Remove junk files, cache, and temporary data to free up space and improve performance.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <div class="tool-list-item" data-tool="startup-manager">
+          <div class="tool-list-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">Startup Manager</div>
+            <div class="tool-list-desc">Manage programs that run on startup to speed up your boot time and improve system performance.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="tool-list-item" data-tool="file-shredder">
+          <div class="tool-list-icon" style="background:rgba(240,82,82,0.12);border-color:rgba(240,82,82,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">File Shredder</div>
+            <div class="tool-list-desc">Securely delete files and folders so they cannot be recovered by anyone.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <div class="tool-list-item" data-tool="duplicate-finder">
+          <div class="tool-list-icon" style="background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.8">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M9 9h6M9 12h6M9 15h4"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">Duplicate File Finder</div>
+            <div class="tool-list-desc">Find and remove duplicate files to free up storage space.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="tool-list-item" data-tool="software-updater">
+          <div class="tool-list-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 .49-3.51"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">Software Updater</div>
+            <div class="tool-list-desc">Check for outdated software and update them to stay secure.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <div class="tool-list-item" data-tool="large-file-finder">
+          <div class="tool-list-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+              <line x1="11" y1="8" x2="11" y2="14"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">Large File Finder</div>
+            <div class="tool-list-desc">Find large files and folders that take up valuable disk space.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="tool-list-item" data-tool="network-inspector">
+          <div class="tool-list-icon" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">Network Inspector</div>
+            <div class="tool-list-desc">Analyze your network connection and detect potential security issues.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <div class="tool-list-item" data-tool="process-manager">
+          <div class="tool-list-icon" style="background:rgba(240,82,82,0.12);border-color:rgba(240,82,82,0.25)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+              <path d="M7 8h10M7 12h6"/>
+            </svg>
+          </div>
+          <div class="tool-list-info">
+            <div class="tool-list-name">Process Manager</div>
+            <div class="tool-list-desc">View and manage running processes and stop suspicious ones.</div>
+          </div>
+          <svg class="tool-list-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+      </div><!-- end tools-list-grid -->
+
+      <!-- Promo banner -->
+      <div class="tools-promo-banner">
+        <div class="tools-promo-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="tools-promo-info">
+          <div class="tools-promo-title">All the tools you need in one place</div>
+          <div class="tools-promo-desc">ShieldScan tools help you maintain your system, protect your data, and keep your device running at its best.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE: SCAN GUARD -->
+    <div id="page-scanguard" class="page">
+
+      <!-- Header -->
+      <div class="generic-header">
+        <h1 class="generic-title">Scan Guard</h1>
+        <p class="generic-sub">Extra protection for downloads, websites, and files before they can harm your device.</p>
+      </div>
+
+      <!-- Status banner -->
+      <div class="sg-status-banner">
+        <div class="sg-banner-left">
+          <div class="sg-shield-wrap">
+            <div class="sg-shield-glow"></div>
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"
+                    fill="rgba(79,142,247,0.25)" stroke="#4f8ef7" stroke-width="1.5"/>
+              <path d="M9 12l2 2 4-4" stroke="#2dce89" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="sg-banner-text">
+            <div class="sg-banner-title">Scan Guard is <span style="color:var(--green)">active</span> and protecting you</div>
+            <div class="sg-banner-sub">Scan Guard monitors your activity and scans files and links in real time to keep you safe from threats.</div>
+          </div>
+        </div>
+        <div class="sg-banner-right">
+          <div class="sg-banner-status-label">Protection status</div>
+          <div class="sg-active-pill">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block"></span>
+            Active
+          </div>
+        </div>
+        <!-- Decorative wave -->
+        <div class="sg-banner-deco" aria-hidden="true">
+          <svg width="160" height="50" viewBox="0 0 160 50" fill="none" opacity="0.15">
+            <path d="M0 25 Q20 5 40 25 Q60 45 80 25 Q100 5 120 25 Q140 45 160 25" stroke="#4f8ef7" stroke-width="2" fill="none"/>
+            <path d="M0 35 Q20 15 40 35 Q60 55 80 35 Q100 15 120 35 Q140 55 160 35" stroke="#4f8ef7" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- What Scan Guard protects -->
+      <div>
+        <div class="priv-section-label">What Scan Guard protects</div>
+        <div class="sg-protects-grid">
+
+          <div class="sg-protect-card">
+            <div class="sg-protect-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </div>
+            <div class="sg-protect-name">Downloads</div>
+            <div class="sg-protect-desc">Scans downloaded files for threats before you open them.</div>
+            <div class="sg-protect-status">
+              <span class="priv-status-pill protected"><span class="priv-status-dot"></span>Protected</span>
+            </div>
+          </div>
+
+          <div class="sg-protect-card">
+            <div class="sg-protect-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="sg-protect-name">Websites</div>
+            <div class="sg-protect-desc">Blocks dangerous websites and prevents harmful connections.</div>
+            <div class="sg-protect-status">
+              <span class="priv-status-pill protected"><span class="priv-status-dot"></span>Protected</span>
+            </div>
+          </div>
+
+          <div class="sg-protect-card">
+            <div class="sg-protect-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <div class="sg-protect-name">Files</div>
+            <div class="sg-protect-desc">Scans files when they are opened, moved, or executed.</div>
+            <div class="sg-protect-status">
+              <span class="priv-status-pill protected"><span class="priv-status-dot"></span>Protected</span>
+            </div>
+          </div>
+
+          <div class="sg-protect-card">
+            <div class="sg-protect-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="sg-protect-name">Email Attachments</div>
+            <div class="sg-protect-desc">Scans email attachments to prevent malicious files from reaching you.</div>
+            <div class="sg-protect-status">
+              <span class="priv-status-pill protected"><span class="priv-status-dot"></span>Protected</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Recent Scan Guard activity -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <span class="section-card-title">Recent Scan Guard activity</span>
+        </div>
+
+        <div class="sg-activity-list">
+
+          <div class="sg-activity-row">
+            <div class="sg-act-icon sg-act-green">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="sg-act-info">
+              <div class="sg-act-title">Safe download scanned</div>
+              <div class="sg-act-sub">setup_app_v2.1.0.exe is safe</div>
+            </div>
+            <div class="sg-act-time">10:24 AM</div>
+          </div>
+
+          <div class="sg-activity-row">
+            <div class="sg-act-icon sg-act-yellow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div class="sg-act-info">
+              <div class="sg-act-title">Unsafe website blocked</div>
+              <div class="sg-act-sub">http://malicious-site.xyz</div>
+            </div>
+            <div class="sg-act-time">10:18 AM</div>
+          </div>
+
+          <div class="sg-activity-row">
+            <div class="sg-act-icon sg-act-green">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="sg-act-info">
+              <div class="sg-act-title">File scanned</div>
+              <div class="sg-act-sub">invoice.pdf is safe</div>
+            </div>
+            <div class="sg-act-time">10:15 AM</div>
+          </div>
+
+          <div class="sg-activity-row">
+            <div class="sg-act-icon sg-act-green">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="sg-act-info">
+              <div class="sg-act-title">Email attachment scanned</div>
+              <div class="sg-act-sub">report.docx is safe</div>
+            </div>
+            <div class="sg-act-time">10:10 AM</div>
+          </div>
+
+        </div>
+
+        <div class="rt-view-full">
+          <a href="#" class="rt-view-full-link" data-action="navigate" data-page="page-detection">
+            View full history
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE: SETTINGS -->
+    <div id="page-settings" class="page">
+
+      <div class="generic-header">
+        <h1 class="generic-title">Settings</h1>
+        <p class="generic-sub">Customize ShieldScan to fit your needs.</p>
+      </div>
+
+      <div class="settings-layout">
+
+        <!-- Left: Category list -->
+        <div class="settings-cat-list" id="settingsCatList">
+
+          <div class="settings-cat-item active" data-cat="general">
+            <div class="settings-cat-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+              </svg>
+            </div>
+            <div class="settings-cat-info">
+              <div class="settings-cat-name">General</div>
+              <div class="settings-cat-desc">Manage general settings and application preferences.</div>
+            </div>
+          </div>
+
+          <div class="settings-cat-item" data-cat="update">
+            <div class="settings-cat-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8">
+                <polyline points="1 4 1 10 7 10"/>
+                <path d="M3.51 15a9 9 0 1 0 .49-3.51"/>
+              </svg>
+            </div>
+            <div class="settings-cat-info">
+              <div class="settings-cat-name">Update</div>
+              <div class="settings-cat-desc">Configure update settings and view update history.</div>
+            </div>
+          </div>
+
+          <div class="settings-cat-item" data-cat="notifications">
+            <div class="settings-cat-icon" style="background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.25)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.8">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+            </div>
+            <div class="settings-cat-info">
+              <div class="settings-cat-name">Notifications</div>
+              <div class="settings-cat-desc">Manage how and when you receive notifications.</div>
+            </div>
+          </div>
+
+          <div class="settings-cat-item" data-cat="scan">
+            <div class="settings-cat-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
+            </div>
+            <div class="settings-cat-info">
+              <div class="settings-cat-name">Scan</div>
+              <div class="settings-cat-desc">Configure scan options and actions.</div>
+            </div>
+          </div>
+
+          <div class="settings-cat-item" data-cat="realtime">
+            <div class="settings-cat-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="settings-cat-info">
+              <div class="settings-cat-name">Real-Time Protection</div>
+              <div class="settings-cat-desc">Configure real-time protection settings.</div>
+            </div>
+          </div>
+
+          <div class="settings-cat-item" data-cat="exclusions">
+            <div class="settings-cat-icon" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.25)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="1.8">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+              </svg>
+            </div>
+            <div class="settings-cat-info">
+              <div class="settings-cat-name">Exclusions</div>
+              <div class="settings-cat-desc">Manage files and folders to exclude from scans.</div>
+            </div>
+          </div>
+
+          <div class="settings-cat-item" data-cat="advanced">
+            <div class="settings-cat-icon" style="background:rgba(240,82,82,0.12);border-color:rgba(240,82,82,0.25)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8">
+                <line x1="4" y1="21" x2="4" y2="14"/>
+                <line x1="4" y1="10" x2="4" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12" y2="3"/>
+                <line x1="20" y1="21" x2="20" y2="16"/>
+                <line x1="20" y1="12" x2="20" y2="3"/>
+                <line x1="1" y1="14" x2="7" y2="14"/>
+                <line x1="9" y1="8" x2="15" y2="8"/>
+                <line x1="17" y1="16" x2="23" y2="16"/>
+              </svg>
+            </div>
+            <div class="settings-cat-info">
+              <div class="settings-cat-name">Advanced</div>
+              <div class="settings-cat-desc">Advanced settings for experienced users.</div>
+            </div>
+          </div>
+
+        </div><!-- end settings-cat-list -->
+
+        <!-- Right: Settings panels -->
+        <div class="settings-panels">
+
+          <!-- General -->
+          <div class="settings-panel active" id="settingsPanel-general">
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Language</span>
+              <span class="settings-panel-val">English</span>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Theme</span>
+              <span class="settings-panel-val">Dark</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Start at login</span>
+              <span class="settings-panel-val" style="color:var(--green)">On</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+
+          <!-- Update -->
+          <div class="settings-panel" id="settingsPanel-update">
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Automatic updates</span>
+              <span class="settings-panel-val" style="color:var(--green)">On</span>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Check for updates</span>
+              <span class="settings-panel-val">Daily</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Update channels</span>
+              <span class="settings-panel-val">Stable</span>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="settings-panel" id="settingsPanel-notifications">
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Show notifications</span>
+              <span class="settings-panel-val" style="color:var(--green)">On</span>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Silent mode</span>
+              <span class="settings-panel-val">Off</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Do not disturb</span>
+              <span class="settings-panel-val">Off</span>
+            </div>
+          </div>
+
+          <!-- Scan -->
+          <div class="settings-panel" id="settingsPanel-scan">
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Scan archives</span>
+              <span class="settings-panel-val" style="color:var(--green)">On</span>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Scan removable drives</span>
+              <span class="settings-panel-val" style="color:var(--green)">On</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Action for threats</span>
+              <span class="settings-panel-val">Quarantine</span>
+            </div>
+          </div>
+
+          <!-- Real-Time Protection -->
+          <div class="settings-panel" id="settingsPanel-realtime">
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Real-time protection</span>
+              <span class="settings-panel-val" style="color:var(--green)">On</span>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Behavior detection</span>
+              <span class="settings-panel-val" style="color:var(--green)">On</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Exclude files/folders</span>
+              <span class="settings-panel-val" style="color:var(--accent)">Manage</span>
+            </div>
+          </div>
+
+          <!-- Exclusions -->
+          <div class="settings-panel" id="settingsPanel-exclusions">
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Excluded files</span>
+              <span class="settings-panel-val">0</span>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Excluded folders</span>
+              <span class="settings-panel-val">0</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Trusted apps</span>
+              <span class="settings-panel-val">1</span>
+            </div>
+          </div>
+
+          <!-- Advanced -->
+          <div class="settings-panel" id="settingsPanel-advanced">
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Threat detection engine</span>
+              <span class="settings-panel-val">Default</span>
+            </div>
+            <div class="settings-panel-row settings-panel-row-link">
+              <span class="settings-panel-label">Heuristics level</span>
+              <span class="settings-panel-val">Medium</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="settings-panel-row">
+              <span class="settings-panel-label">Allow all connections</span>
+              <span class="settings-panel-val">Ask</span>
+            </div>
+          </div>
+
+        </div><!-- end settings-panels -->
+      </div><!-- end settings-layout -->
+    </div>
+
+    <!-- PAGE: ACCOUNT -->
+    <div id="page-account" class="page">
+
+      <div class="generic-header">
+        <h1 class="generic-title">Account</h1>
+        <p class="generic-sub">Manage your account details, subscription, and connected devices.</p>
+      </div>
+
+      <!-- Profile row — editable -->
+      <div class="acct-profile-row" id="acctProfileRow">
+        <!-- Avatar with upload -->
+        <div class="acct-avatar-wrap" id="acctAvatarWrap" title="Click to change photo">
+          <img id="acctAvatarImg" src="" alt="Profile photo" class="acct-avatar-img" style="display:none"/>
+          <div class="acct-avatar" id="acctAvatarDefault">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+              <circle cx="12" cy="8" r="4"/><path d="M4 22c2.5-5 13.5-5 16 0"/>
+            </svg>
+          </div>
+          <div class="acct-avatar-overlay">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </div>
+          <input type="file" id="acctPhotoInput" accept="image/*" style="display:none"/>
+        </div>
+
+        <!-- Editable profile info -->
+        <div class="acct-profile-info" id="acctProfileInfo">
+          <div class="acct-name" id="acctDisplayName">Juan Dela Cruz</div>
+          <div class="acct-email" id="acctDisplayEmail">juan.delacruz@email.com</div>
+          <div class="acct-since">Member since May 10, 2024</div>
+        </div>
+
+        <button class="acct-manage-btn" id="acctManageBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          Edit profile
+        </button>
+      </div>
+
+      <!-- Account sections list -->
+      <div class="acct-sections">
+
+        <!-- Subscription -->
+        <div class="acct-section-row">
+          <div class="acct-section-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="acct-section-info">
+            <div class="acct-section-name">Subscription</div>
+            <div class="acct-section-plan">ShieldScan Free — Unlimited</div>
+            <div class="acct-section-sub">Full protection with no limits, forever free.</div>
+          </div>
+          <div class="acct-section-right">
+            <span class="acct-free-badge">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Free Forever
+            </span>
+          </div>
+          <svg class="acct-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Payment method -->
+        <div class="acct-section-row">
+          <div class="acct-section-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <div class="acct-section-info">
+            <div class="acct-section-name">Payment method</div>
+            <div class="acct-section-plan" style="color:var(--green)">No payment required</div>
+            <div class="acct-section-sub">ShieldScan is completely free — no credit card needed.</div>
+          </div>
+          <div class="acct-section-right">
+            <span style="font-size:12px;color:var(--green);font-weight:700">✓ Free</span>
+          </div>
+          <svg class="acct-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Devices -->
+        <div class="acct-section-row" id="acctDevicesRow" style="cursor:pointer">
+          <div class="acct-section-icon" style="background:rgba(45,206,137,0.12);border-color:rgba(45,206,137,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <div class="acct-section-info">
+            <div class="acct-section-name">Devices</div>
+            <div class="acct-section-plan">Unlimited devices</div>
+            <div class="acct-section-sub">Protect as many devices as you want, for free.</div>
+          </div>
+          <div class="acct-section-right">
+            <button class="acct-action-btn" id="acctManageDevicesBtn">Manage devices</button>
+          </div>
+          <svg class="acct-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Account security -->
+        <div class="acct-section-row" id="acctSecurityRow" style="cursor:pointer">
+          <div class="acct-section-icon" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="1.8">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="acct-section-info">
+            <div class="acct-section-name">Account security</div>
+            <div class="acct-section-sub">Keep your account secure with these settings.</div>
+          </div>
+          <div class="acct-section-right acct-security-checks">
+            <div class="acct-check-item">
+              <span class="acct-check-dot green"></span>
+              <span class="acct-check-label">Email verified</span>
+            </div>
+            <div class="acct-check-item">
+              <span class="acct-check-dot green"></span>
+              <span class="acct-check-label">Two-factor authentication</span>
+              <span class="acct-check-val" id="acct2faStatus">Off</span>
+            </div>
+            <div class="acct-check-item">
+              <span class="acct-check-dot green"></span>
+              <span class="acct-check-label">Recovery email</span>
+              <span class="acct-check-val" id="acctRecoveryStatus">Not set</span>
+            </div>
+            <button class="acct-action-btn" id="acctManageSecurityBtn" style="margin-top:6px">Manage security</button>
+          </div>
+          <svg class="acct-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Help & support -->
+        <div class="acct-section-row" id="acctHelpRow" style="cursor:pointer">
+          <div class="acct-section-icon" style="background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.25)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+            </svg>
+          </div>
+          <div class="acct-section-info">
+            <div class="acct-section-name">Help &amp; support</div>
+            <div class="acct-section-sub">Get help, guides, and contact the developer.</div>
+          </div>
+          <div class="acct-section-right">
+            <button class="acct-action-btn" id="acctHelpBtn">View help center</button>
+          </div>
+          <svg class="acct-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+      </div><!-- end acct-sections -->
+    </div>
+
+  </div>
+</main>
+
+<!-- RIGHT PANEL -->
+<aside class="right-panel">
+
+  <!-- ── TRUSTED ADVISOR (shown on Dashboard / AI Scam pages) ── -->
+  <div id="rp-advisor">
+    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+
+    <!-- Gauge -->
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path id="gaugeArc"
+              d="M 10 120 A 100 100 0 0 1 210 120"
+              stroke="var(--accent)"
+              stroke-width="18"
+              fill="none"
+              stroke-linecap="round"
+              stroke-dasharray="314"
+              stroke-dashoffset="70"
+              style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span id="gaugeScore">79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+
+    <div class="advisor-divider"></div>
+    <div class="advisor-section-title">Stay ahead of every threat</div>
+    <div class="advisor-items">
+      <div class="advisor-item">
+        <div class="adv-icon">🛡️</div>
+        <div class="adv-info">
+          <div class="adv-title">Protect your devices 24/7</div>
+          <div class="adv-sub">Real-time protection is on</div>
+        </div>
+        <div class="adv-check">✓</div>
+      </div>
+      <div class="advisor-item">
+        <div class="adv-icon">🧭</div>
+        <div class="adv-info">
+          <div class="adv-title">Browse privately</div>
+          <div class="adv-sub">VPN is OFF</div>
+        </div>
+        <button class="btn-turnon" type="button" data-action="navigate" data-page="page-vpn">Turn on</button>
+      </div>
+      <div class="advisor-item">
+        <div class="adv-icon">🔒</div>
+        <div class="adv-info">
+          <div class="adv-title">Secure your identity</div>
+          <div class="adv-sub">No issues found</div>
+        </div>
+        <div class="adv-check">✓</div>
+      </div>
+    </div>
+
+    <button class="btn-viewplans" type="button" data-action="navigate" data-page="page-account">
+      View account details
+    </button>
+  </div>
+
+  <!-- ── SCANNER PANEL (shown on Scanner page) ── -->
+  <div id="rp-scanner" style="display:none;flex-direction:column;gap:16px">
+    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+
+    <!-- Gauge (duplicate for scanner panel) -->
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120"
+              stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round"
+              stroke-dasharray="314" stroke-dashoffset="70"
+              style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+
+    <div class="advisor-divider"></div>
+
+    <!-- Active protections -->
+    <div class="rp-section-title">Active protections</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Real-Time Protection</span>
+        <span class="rp-prot-status active">Active</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">AI Scam Protection</span>
+        <span class="rp-prot-status active">Active</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Web Protection</span>
+        <span class="rp-prot-status active">Active</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Scan Guard</span>
+        <span class="rp-prot-status active">Active</span>
+      </div>
+    </div>
+
+    <div class="advisor-divider"></div>
+
+    <!-- Last scan -->
+    <div class="rp-section-title">Last scan</div>
+    <div class="rp-last-scan">
+      <div class="rp-last-scan-info">
+        <div class="rp-last-scan-type" id="rpLastScanType">Quick Scan</div>
+        <div class="rp-last-scan-time" id="rpLastScanTime">Today, 10:24 AM</div>
+      </div>
+      <div class="rp-last-scan-result" id="rpLastScanResult">
+        <span style="color:var(--red);font-weight:800;font-size:12px">2 threats</span>
+        <span style="color:var(--text2);font-size:11px">found</span>
+      </div>
+    </div>
+
+    <button class="btn-viewplans" type="button" data-action="navigate" data-page="page-realtime">
+      View detection history
+    </button>
+  </div>
+
+  <!-- ── DETECTION HISTORY PANEL (shown on Detection History page) ── -->
+  <div id="rp-detection" style="display:none;flex-direction:column;gap:14px">    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+
+    <!-- Gauge -->
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120"
+              stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round"
+              stroke-dasharray="314" stroke-dashoffset="70"
+              style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+
+    <div class="advisor-divider"></div>
+
+    <!-- Stay ahead -->
+    <div class="rp-section-title">Stay ahead of every threat</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Real-time protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">AI Scam Protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Last scan</span>
+        <span style="font-size:11px;color:var(--text2)">2 hrs ago ✓</span>
+      </div>
+    </div>
+
+    <div class="advisor-divider"></div>
+
+    <!-- Need help -->
+    <div class="rp-section-title">Need help?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.5;margin:0">Visit our help center for guides and support.</p>
+
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Go to help center
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── REAL-TIME PROTECTION PANEL ── -->
+  <div id="rp-realtime" style="display:none;flex-direction:column;gap:14px">    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+
+    <!-- Gauge -->
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120"
+              stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round"
+              stroke-dasharray="314" stroke-dashoffset="70"
+              style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+
+    <div class="advisor-divider"></div>
+
+    <!-- Protection summary -->
+    <div class="rp-section-title">Protection summary</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3h18v13H3z"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Files scanned</span>
+        <span class="rp-prot-status" style="color:var(--text1);font-weight:800">24,591</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Threats blocked</span>
+        <span class="rp-prot-status" style="color:var(--text1);font-weight:800">12</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Web threats blocked</span>
+        <span class="rp-prot-status" style="color:var(--text1);font-weight:800">8</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <span class="rp-prot-label">Last scan</span>
+        <span class="rp-prot-status" style="color:var(--text2);font-weight:600;font-size:11px">2 hours ago</span>
+      </div>
+    </div>
+
+    <div class="advisor-divider"></div>
+
+    <!-- Need help -->
+    <div class="rp-section-title">Need help?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.5;margin:0">Visit our help center for guides and support.</p>
+
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Go to help center
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── PRIVACY PANEL ── -->
+  <div id="rp-privacy" style="display:none;flex-direction:column;gap:14px">    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="70" style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Stay ahead of every threat</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <span class="rp-prot-label">Real-time protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/></svg></div>
+        <span class="rp-prot-label">AI Scam Protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="rp-prot-label">Last scan</span>
+        <span style="font-size:11px;color:var(--text2)">2 hrs ago ✓</span>
+      </div>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Privacy status</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <span class="rp-prot-label">Webcam</span>
+        <span class="rp-prot-status active">Protected</span>
+      </div>
+      <div class="rp-prot-row">
+        <span class="rp-prot-label">Microphone</span>
+        <span class="rp-prot-status active">Protected</span>
+      </div>
+      <div class="rp-prot-row">
+        <span class="rp-prot-label">Tracking protection</span>
+        <span class="rp-prot-status active">Protected</span>
+      </div>
+    </div>
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Manage privacy settings
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── IDENTITY PANEL ── -->
+  <div id="rp-identity" style="display:none;flex-direction:column;gap:14px">    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="70" style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Identity summary</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <span class="rp-prot-label">Monitored items</span>
+        <span class="rp-prot-status" style="color:var(--text1);font-weight:800">7</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <span class="rp-prot-label">Data breaches monitored</span>
+        <span class="rp-prot-status" style="color:var(--text1);font-weight:800">4</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <span class="rp-prot-label">Alerts (last 30 days)</span>
+        <span class="rp-prot-status" style="color:var(--text1);font-weight:800">0</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="rp-prot-label">Identity status</span>
+        <span class="rp-prot-status active">All good</span>
+      </div>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Need help?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.5;margin:0">Visit our help center for guides and support.</p>
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Go to help center
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── TOOLS PANEL ── -->
+  <div id="rp-tools" style="display:none;flex-direction:column;gap:14px">
+    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="70" style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Stay ahead of every threat</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <span class="rp-prot-label">Real-time protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/></svg></div>
+        <span class="rp-prot-label">AI Scam Protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="rp-prot-label">Last scan</span>
+        <span style="font-size:11px;color:var(--text2)">2 hrs ago ✓</span>
+      </div>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Need help?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.5;margin:0">Visit our help center for guides and support.</p>
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Go to help center
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── SCAN GUARD PANEL ── -->
+  <div id="rp-scanguard" style="display:none;flex-direction:column;gap:14px">
+    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="70" style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Stay ahead of every threat</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <span class="rp-prot-label">Real-time protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/></svg></div>
+        <span class="rp-prot-label">AI Scam Protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="rp-prot-label">Scan Guard</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="rp-prot-label">Last scan</span>
+        <span style="font-size:11px;color:var(--text2)">2 hours ago ✓</span>
+      </div>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Need help?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.5;margin:0">Visit our help center for guides and support.</p>
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Go to help center
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── SETTINGS PANEL ── -->
+  <div id="rp-settings" style="display:none;flex-direction:column;gap:14px">
+    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="70" style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Stay ahead of every threat</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <span class="rp-prot-label">Real-time protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/></svg></div>
+        <span class="rp-prot-label">AI Scam Protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="rp-prot-label">Scan Guard</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="rp-prot-label">Last scan</span>
+        <span style="font-size:11px;color:var(--text2)">2 hours ago ✓</span>
+      </div>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Need help?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.5;margin:0">Visit our help center for guides and support.</p>
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Go to help center
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── ACCOUNT PANEL ── -->
+  <div id="rp-account" style="display:none;flex-direction:column;gap:14px">
+    <div class="panel-header">
+      <div class="panel-title">Trusted Advisor</div>
+      <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-weight:800;font-size:12px;">i</div>
+    </div>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" aria-label="Protection score gauge">
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 10 120 A 100 100 0 0 1 210 120" stroke="var(--accent)" stroke-width="18" fill="none" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="70" style="filter: drop-shadow(0 8px 22px rgba(79,142,247,.35));"/>
+      </svg>
+      <div class="gauge-score"><span>79</span></div>
+      <div class="gauge-label">Fair</div>
+      <a href="#" class="boost-link">Boost your score</a>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Stay ahead of every threat</div>
+    <div class="rp-protection-list">
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <span class="rp-prot-label">Real-time protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"/></svg></div>
+        <span class="rp-prot-label">AI Scam Protection</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="rp-prot-label">Scan Guard</span>
+        <span class="rp-prot-status active">Active ✓</span>
+      </div>
+      <div class="rp-prot-row">
+        <div class="rp-prot-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="rp-prot-label">Last scan</span>
+        <span style="font-size:11px;color:var(--text2)">2 hours ago ✓</span>
+      </div>
+    </div>
+    <div class="advisor-divider"></div>
+    <div class="rp-section-title">Need help?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.5;margin:0">Visit our help center for guides and support.</p>
+    <a href="#" class="btn-viewplans" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      Go to help center
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+
+</aside>
+
+<!-- MODAL (kept for compatibility) -->
+<div id="globalModal" class="modal-overlay" style="display:none">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="modalTitle">Info</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script src="threat-detector.js"></script>
+<script src="vpn-manager.js"></script>
+<script src="dashboard.js"></script>
+<script src="dashboard-fix.js"></script>
+<script src="dashboard-events.js"></script>
+<script src="realtime-fix.js"></script>
+</body>
+</html>

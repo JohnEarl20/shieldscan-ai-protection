@@ -1,0 +1,75 @@
+{
+  "manifest_version": 3,
+  "name": "AI Scam Protection",
+  "version": "0.4.0",
+  "description": "Advanced browser protection with real threat detection, VPN, and Microsoft Defender integration.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AI Scam Protection"
+  },
+  "options_page": "dashboard.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js",
+        "realtime-integration.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "http://localhost:8765/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "tracker_rules",
+        "enabled": true,
+        "path": "tracker_rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "webRequest",
+    "activeTab",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "declarativeNetRequestFeedback",
+    "history",
+    "downloads",
+    "nativeMessaging"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "blocked.html",
+        "dashboard.html",
+        "scanner.html",
+        "test_extension.html",
+        "dashboard-events.js",
+        "dashboard-inline.js",
+        "dashboard-csp-compliant.js",
+        "shieldscan-api.js",
+        "fix_blocking_issue.js",
+        "threat-detector.js",
+        "vpn-manager.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}

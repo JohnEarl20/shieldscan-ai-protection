@@ -1,0 +1,13 @@
+[project]
+name = "ai-scam-protection"
+version = "0.1.0"
+description = "Defensive Windows protection MVP for scanning, monitoring, and quarantining suspicious files."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+ai-scam-protect = "ai_scam_protection.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
