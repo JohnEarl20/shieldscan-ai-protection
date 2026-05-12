@@ -4,144 +4,174 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>ShieldScan</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{width:360px;background:#0f172a;color:#e2e8f0;font-family:'Segoe UI',sans-serif;overflow:hidden}
-
-    /* Header */
-    .header{background:linear-gradient(135deg,#1e3a5f,#1e1b4b);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08)}
-    .logo{display:flex;align-items:center;gap:10px}
-    .logo-icon{width:30px;height:30px;background:linear-gradient(135deg,#4f8ef7,#6366f1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
-    .logo-text{font-size:16px;font-weight:700;color:#e2e8f0}
-    .logo-sub{font-size:10px;color:#64748b}
-    #apiBadge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;background:rgba(255,255,255,.06);cursor:default}
-
-    /* Status bar */
-    .status-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(45,206,137,.06);border-bottom:1px solid rgba(45,206,137,.12)}
-    #statusDot{width:7px;height:7px;border-radius:50%;background:#2dce89;animation:pulse 2s infinite;flex-shrink:0}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-    #statusText{font-size:12px;font-weight:600;color:#2dce89}
-
-    /* Stats grid */
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
-    .stat{background:#0f172a;padding:12px 8px;text-align:center}
-    .stat-val{font-size:22px;font-weight:700;color:#4f8ef7;line-height:1}
-    .stat-lbl{font-size:10px;color:#64748b;margin-top:3px}
-
-    /* Recent detections */
-    .section{padding:12px 16px}
-    .section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-    #recentList{min-height:40px}
-
-    /* Actions */
-    .actions{padding:0 16px 14px;display:flex;flex-direction:column;gap:7px}
-    .btn{width:100%;padding:10px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;text-align:center;text-decoration:none;display:block}
-    .btn:hover{opacity:.85}
-    .btn-primary{background:linear-gradient(90deg,#4f8ef7,#6366f1);color:#fff}
-    .btn-secondary{background:rgba(255,255,255,.08);color:#e2e8f0;border:1px solid rgba(255,255,255,.1)}
-    .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-    .btn-sm{padding:8px;font-size:12px;font-weight:600;border:none;border-radius:7px;cursor:pointer;background:rgba(255,255,255,.08);color:#e2e8f0;transition:opacity .15s}
-    .btn-sm:hover{opacity:.8}
-
-    /* Tracker panel */
-    .tracker-panel{margin:0 16px 12px;background:rgba(45,206,137,.06);border:1px solid rgba(45,206,137,.15);border-radius:10px;overflow:hidden}
-    .tracker-header{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;cursor:pointer;user-select:none}
-    .tracker-header-left{display:flex;align-items:center;gap:8px}
-    .tracker-icon{font-size:15px}
-    .tracker-title{font-size:12px;font-weight:700;color:#2dce89}
-    .tracker-count-badge{background:rgba(45,206,137,.2);color:#2dce89;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
-    .tracker-chevron{font-size:10px;color:#64748b;transition:transform .2s}
-    .tracker-chevron.open{transform:rotate(180deg)}
-    .tracker-body{display:none;padding:0 12px 10px;border-top:1px solid rgba(45,206,137,.1)}
-    .tracker-body.open{display:block}
-    .tracker-stat-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:11px}
-    .tracker-stat-row:last-child{border-bottom:none}
-    .tracker-domain{color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
-    .tracker-domain-count{color:#2dce89;font-weight:700;flex-shrink:0}
-    .tracker-empty{color:#64748b;font-size:11px;padding:6px 0;text-align:center}
-    .tracker-tabs{display:flex;gap:1px;background:rgba(255,255,255,.04);border-radius:6px;padding:2px;margin-bottom:8px;margin-top:6px}
-    .tracker-tab{flex:1;padding:4px;text-align:center;font-size:10px;font-weight:600;color:#64748b;border-radius:5px;cursor:pointer;transition:all .15s}
-    .tracker-tab.active{background:rgba(45,206,137,.15);color:#2dce89}
-
-    /* Notification */
-    .notif{position:fixed;top:8px;left:8px;right:8px;padding:8px 12px;border-radius:7px;font-size:12px;font-weight:600;text-align:center;z-index:999;display:none;color:#fff}
-  </style>
+  <link rel="stylesheet" href="popup.css"/>
 </head>
 <body>
-  <div class="notif" id="notification"></div>
 
-  <div class="header">
-    <div class="logo">
-      <div class="logo-icon">🛡️</div>
+  <!-- HEADER -->
+  <div class="popup-header">
+    <div class="popup-logo">
+      <div class="popup-logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z" fill="#4f8ef7"/>
+          <path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <div>
-        <div class="logo-text">ShieldScan</div>
-        <div class="logo-sub">AI Scam Protection</div>
+        <div class="popup-logo-name">ShieldScan</div>
+        <div class="popup-logo-sub">AI Scam Protection</div>
       </div>
     </div>
-    <div id="apiBadge">🔴 Offline</div>
-  </div>
-
-  <div class="status-bar">
-    <div id="statusDot"></div>
-    <div id="statusText">Connecting...</div>
-  </div>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-val" id="threatsBlocked">—</div>
-      <div class="stat-lbl">Threats Blocked</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val" id="protectionScore">—</div>
-      <div class="stat-lbl">Protection Score</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val" id="scansToday">—</div>
-      <div class="stat-lbl">Scans Today</div>
+    <div class="popup-api-badge" id="apiBadge">
+      <span class="popup-api-dot" id="apiBadgeDot"></span>
+      <span id="apiBadgeText">Connecting</span>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-title">Recent Detections</div>
+  <!-- STATUS BANNER -->
+  <div class="popup-status-banner" id="statusBanner">
+    <div class="popup-status-left">
+      <div class="popup-shield-wrap">
+        <div class="popup-shield-glow"></div>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z"
+                fill="rgba(45,206,137,0.3)" stroke="#2dce89" stroke-width="1.5"/>
+          <path d="M9 12l2 2 4-4" stroke="#2dce89" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="popup-status-title" id="statusTitle">Protection Active</div>
+        <div class="popup-status-sub" id="statusSub">ShieldScan is protecting you</div>
+      </div>
+    </div>
+    <div class="popup-status-pill" id="statusPill">
+      <span class="popup-status-dot"></span>
+      Active
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="popup-stats">
+    <div class="popup-stat">
+      <div class="popup-stat-val" id="threatsBlocked">—</div>
+      <div class="popup-stat-lbl">Threats Blocked</div>
+    </div>
+    <div class="popup-stat-divider"></div>
+    <div class="popup-stat">
+      <div class="popup-stat-val" id="protectionScore">—</div>
+      <div class="popup-stat-lbl">Protection Score</div>
+    </div>
+    <div class="popup-stat-divider"></div>
+    <div class="popup-stat">
+      <div class="popup-stat-val" id="scansToday">—</div>
+      <div class="popup-stat-lbl">Scans Today</div>
+    </div>
+  </div>
+
+  <!-- QUICK SCAN INPUT -->
+  <div class="popup-scan-section">
+    <div class="popup-scan-input-wrap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      <input id="scanInput" type="text" placeholder="Paste a link to scan…" class="popup-scan-input"/>
+    </div>
+    <button class="popup-btn-scan" id="scanLinkBtn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+      Scan
+    </button>
+  </div>
+
+  <!-- SCAN RESULT -->
+  <div class="popup-scan-result hidden" id="scanResult"></div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="popup-actions">
+    <button class="popup-btn-primary" id="dashboardBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Open Full Dashboard
+    </button>
+
+    <div class="popup-btn-row">
+      <button class="popup-btn-secondary" id="quickScanBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+        Quick Scan
+      </button>
+      <button class="popup-btn-secondary" id="scanPageBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        Scan Page
+      </button>
+    </div>
+
+    <div class="popup-btn-row">
+      <button class="popup-btn-secondary" id="vpnBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span id="vpnBtnText">VPN Off</span>
+      </button>
+      <button class="popup-btn-secondary" id="historyBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/>
+        </svg>
+        History
+      </button>
+    </div>
+  </div>
+
+  <!-- TRACKER PANEL -->
+  <div class="popup-tracker-panel">
+    <div class="popup-tracker-header" id="trackerToggle">
+      <div class="popup-tracker-left">
+        <div class="popup-tracker-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span class="popup-tracker-title">Trackers &amp; Ads Blocked</span>
+      </div>
+      <div class="popup-tracker-right">
+        <span class="popup-tracker-badge" id="trackerBadge">0</span>
+        <svg class="popup-tracker-chevron" id="trackerChevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </div>
+    <div class="popup-tracker-body" id="trackerBody">
+      <div class="popup-tracker-tabs">
+        <button class="popup-tracker-tab active" id="tabThisPage">This Page</button>
+        <button class="popup-tracker-tab" id="tabAllTime">All Time</button>
+      </div>
+      <div id="trackerList" class="popup-tracker-list">
+        <div class="popup-tracker-empty">No trackers detected on this page</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECENT DETECTIONS -->
+  <div class="popup-recent">
+    <div class="popup-recent-header">
+      <span class="popup-section-title">Recent Detections</span>
+      <button class="popup-view-all" id="viewAllBtn">View all</button>
+    </div>
     <div id="recentList">
-      <div style="color:#64748b;font-size:12px;padding:6px 0">Loading...</div>
+      <div class="popup-loading">Loading…</div>
     </div>
   </div>
 
-  <!-- Tracker & Ad Blocking Panel -->
-  <div class="tracker-panel" id="trackerPanel">
-    <div class="tracker-header" id="trackerToggle">
-      <div class="tracker-header-left">
-        <span class="tracker-icon">🛡️</span>
-        <span class="tracker-title">Trackers &amp; Ads Blocked</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <span class="tracker-count-badge" id="trackerBadge">0</span>
-        <span class="tracker-chevron" id="trackerChevron">▼</span>
-      </div>
-    </div>
-    <div class="tracker-body" id="trackerBody">
-      <div class="tracker-tabs">
-        <div class="tracker-tab active" id="tabThisPage">This Page</div>
-        <div class="tracker-tab" id="tabAllTime">All Time</div>
-      </div>
-      <div id="trackerList">
-        <div class="tracker-empty">No trackers blocked on this page</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <a href="#" class="btn btn-primary" id="dashboardBtn">🎯 Open Full Dashboard</a>
-    <div class="btn-row">
-      <button class="btn-sm" id="scanBtn">🔍 Quick Scan</button>
-      <button class="btn-sm" id="scanPageBtn">🌐 Scan This Page</button>
-    </div>
-    <div class="btn-row">
-      <a href="#" class="btn-sm" id="scannerBtn">🛡️ AI Scanner</a>
-      <button class="btn-sm" id="vpnBtn">🌐 VPN</button>
-    </div>
-  </div>
+  <!-- NOTIFICATION TOAST -->
+  <div class="popup-toast hidden" id="toast"></div>
 
   <script src="popup.js"></script>
 </body>
