@@ -1,108 +1,136 @@
-// ═══════════════════════════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════════════════════════
 // REAL-TIME INTEGRATION - ShieldScan
-// Polls the local API server (localhost:8765) for real threat data.
-// Runs as a content script on every page — no fake/simulated data.
+// Content script — polls local API with circuit breaker to prevent console spam
 // ═══════════════════════════════════════════════════════════════════════════════
 
 (function () {
   'use strict';
 
+  // Skip extension pages entirely
+  const href = window.location.href;
+  if (href.startsWith('chrome-extension://') ||
+      href.startsWith('moz-extension://') ||
+      href.startsWith('chrome://') ||
+      href.startsWith('about:')) return;
+
   const API = 'http://localhost:8765';
-  let _lastDetectionTimestamp = null;
-  let _pollTimer = null;
+
+  // ── Circuit breaker ──────────────────────────────────────────────────────────
+  let _failCount = 0;
+  let _retryAt = 0;
   let _stopped = false;
+  let _lastDetectionTs = null;
 
-  // ── Extension context guard ──────────────────────────────────────────────────
-  // Stop all polling if the extension is reloaded/invalidated
+  const MAX_FAILS = 3;       // stop after 3 consecutive failures
+  const RETRY_AFTER = 120000; // retry after 2 minutes
+  const POLL_INTERVAL = 30000; // poll every 30s (not 8s)
 
-  function isExtensionValid() {
-    try {
-      return typeof chrome !== 'undefined' && !!chrome.runtime?.id;
-    } catch { return false; }
+  function isCircuitOpen() {
+    if (_failCount < MAX_FAILS) return false;
+    if (Date.now() >= _retryAt) {
+      // Half-open: allow one retry
+      _failCount = 0;
+      return false;
+    }
+    return true; // circuit open — skip request
   }
 
-  function stopPolling() {
-    _stopped = true;
-    if (_pollTimer) {
-      clearInterval(_pollTimer);
-      _pollTimer = null;
+  function onSuccess() { _failCount = 0; }
+  function onFailure() {
+    _failCount++;
+    if (_failCount >= MAX_FAILS) _retryAt = Date.now() + RETRY_AFTER;
+  }
+
+  // ── Extension context guard ──────────────────────────────────────────────────
+  function isExtensionValid() {
+    try { return typeof chrome !== 'undefined' && !!chrome.runtime?.id; }
+    catch { return false; }
+  }
+
+  function stop() { _stopped = true; }
+
+  // ── Fetch helper — silent, no console errors ─────────────────────────────────
+  async function apiGet(path) {
+    if (_stopped || isCircuitOpen()) return null;
+    try {
+      const r = await fetch(`${API}${path}`, { signal: AbortSignal.timeout(2000) });
+      if (!r.ok) { onFailure(); return null; }
+      onSuccess();
+      return await r.json();
+    } catch {
+      onFailure();
+      return null;
     }
   }
 
-  // ── Fetch helpers ────────────────────────────────────────────────────────────
-
-  async function apiGet(path) {
-    if (_stopped) return null;
-    try {
-      const r = await fetch(`${API}${path}`, { signal: AbortSignal.timeout(4000) });
-      if (!r.ok) return null;
-      return await r.json();
-    } catch { return null; }
-  }
-
   async function apiPost(path, body) {
-    if (_stopped) return null;
+    if (_stopped || isCircuitOpen()) return null;
     try {
       const r = await fetch(`${API}${path}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-        signal: AbortSignal.timeout(6000),
+        signal: AbortSignal.timeout(3000),
       });
-      if (!r.ok) return null;
+      if (!r.ok) { onFailure(); return null; }
+      onSuccess();
       return await r.json();
-    } catch { return null; }
+    } catch {
+      onFailure();
+      return null;
+    }
   }
 
-  // ── Poll for new detections ──────────────────────────────────────────────────
+  // ── Broadcast to background ──────────────────────────────────────────────────
+  function send(message) {
+    if (_stopped || !isExtensionValid()) return;
+    try {
+      chrome.runtime.sendMessage(message).catch(err => {
+        if (err?.message?.includes('context invalidated') ||
+            err?.message?.includes('Extension context')) stop();
+      });
+    } catch { stop(); }
+  }
 
+  // ── Poll detections ──────────────────────────────────────────────────────────
   async function pollDetections() {
-    if (_stopped || !isExtensionValid()) { stopPolling(); return; }
-
+    if (_stopped || !isExtensionValid()) { stop(); return; }
     const data = await apiGet('/api/detections?limit=5');
-    if (!data || !Array.isArray(data.detections)) return;
+    if (!data?.detections?.length) return;
 
-    const newDetections = data.detections.filter(d => {
-      if (!_lastDetectionTimestamp) return false;
-      return d.timestamp > _lastDetectionTimestamp;
-    });
-
-    if (data.detections.length > 0 && !_lastDetectionTimestamp) {
-      _lastDetectionTimestamp = data.detections[0].timestamp;
+    if (!_lastDetectionTs) {
+      _lastDetectionTs = data.detections[0].timestamp;
+      return; // first run — just record timestamp, don't broadcast
     }
 
-    newDetections.forEach(det => {
-      _lastDetectionTimestamp = det.timestamp;
-      broadcastToBackground({
+    const newOnes = data.detections.filter(d => d.timestamp > _lastDetectionTs);
+    newOnes.forEach(det => {
+      _lastDetectionTs = det.timestamp;
+      send({
         type: 'REAL_THREAT_DETECTED',
         data: {
           id: Date.now(),
           timestamp: det.timestamp,
           type: det.level === 'high' ? 'malicious' : 'suspicious',
           title: det.path
-            ? `Threat detected: ${det.path.split('\\').pop().split('/').pop()}`
+            ? 'Threat detected: ' + det.path.split('\\').pop().split('/').pop()
             : 'Threat detected',
           path: det.path,
           score: det.score,
           level: det.level,
-          category: det.findings?.[0]?.rule || 'malware',
+          category: (det.findings && det.findings[0] && det.findings[0].rule) || 'malware',
           action: det.quarantined ? 'quarantined' : (det.level === 'high' ? 'blocked' : 'flagged'),
-          ai_score: det.ai_score,
-          sandbox_verdict: det.sandbox_verdict,
         },
       });
     });
   }
 
   // ── Poll stats ───────────────────────────────────────────────────────────────
-
   async function pollStats() {
-    if (_stopped || !isExtensionValid()) { stopPolling(); return; }
-
+    if (_stopped || !isExtensionValid()) { stop(); return; }
     const data = await apiGet('/api/stats');
     if (!data || data.error) return;
-
-    broadcastToBackground({
+    send({
       type: 'REAL_STATS_UPDATE',
       data: {
         threatsBlocked: data.threats_blocked,
@@ -113,81 +141,38 @@
     });
   }
 
-  // ── Analyze current page URL via real API ────────────────────────────────────
-
+  // ── Analyze current page (once, on load) ─────────────────────────────────────
   async function analyzeCurrentPage() {
-    if (_stopped || !isExtensionValid()) return;
-
+    if (_stopped || !isExtensionValid() || isCircuitOpen()) return;
     const url = window.location.href;
-    if (!url || url.startsWith('chrome') || url.startsWith('about') || url.startsWith('moz-extension')) return;
+    if (!url.startsWith('http')) return;
 
     const result = await apiPost('/api/scan', { target: url });
     if (!result || result.error) return;
 
     if (result.level === 'high' || result.level === 'medium') {
-      broadcastToBackground({
+      send({
         type: 'PAGE_THREAT_DETECTED',
-        data: {
-          url,
-          score: result.score,
-          level: result.level,
-          result: result.result,
-          findings: result.url_findings || [],
-          heuristic: result.heuristic,
-          sandbox: result.sandbox,
-        },
+        data: { url, score: result.score, level: result.level, findings: result.url_findings || [] },
       });
     }
   }
 
-  // ── Broadcast to background ──────────────────────────────────────────────────
-
-  function broadcastToBackground(message) {
-    if (_stopped) return;
-    try {
-      if (isExtensionValid()) {
-        chrome.runtime.sendMessage(message).catch((err) => {
-          // Extension was reloaded — stop all polling
-          if (err?.message?.includes('Extension context invalidated') ||
-              err?.message?.includes('context invalidated')) {
-            stopPolling();
-          }
-        });
-      } else {
-        stopPolling();
-      }
-    } catch {
-      stopPolling();
-    }
-  }
-
-  // ── Start polling ────────────────────────────────────────────────────────────
-
-  function startPolling() {
-    // Initial load
+  // ── Start ────────────────────────────────────────────────────────────────────
+  // Initial poll after 3s (let page settle)
+  setTimeout(() => {
     pollStats();
     pollDetections();
+    analyzeCurrentPage();
+  }, 3000);
 
-    // Poll every 8 seconds
-    _pollTimer = setInterval(() => {
-      if (!isExtensionValid()) {
-        stopPolling();
-        return;
-      }
+  // Recurring poll — 30s interval with circuit breaker
+  setInterval(() => {
+    if (!isExtensionValid()) { stop(); return; }
+    if (!isCircuitOpen()) {
       pollStats();
       pollDetections();
-    }, 8000);
-  }
-
-  // ── Init ─────────────────────────────────────────────────────────────────────
-
-  // Only run on regular web pages, not extension pages
-  if (!window.location.href.startsWith('chrome-extension://') &&
-      !window.location.href.startsWith('moz-extension://')) {
-    startPolling();
-
-    // Analyze current page after a short delay (let page load first)
-    setTimeout(analyzeCurrentPage, 2000);
-  }
+    }
+  }, POLL_INTERVAL);
 
 })();
