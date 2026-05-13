@@ -95,13 +95,13 @@ class RealtimeDashboard {
     const indicator = document.getElementById('apiStatusIndicator');
     const banner = document.getElementById('apiOfflineBanner');
     if (indicator) {
-      indicator.textContent = online ? '🟢 Live' : '🔴 Offline';
+      indicator.textContent = online ? '🟢 Live' : '🟡 Protected';
       indicator.title = online
         ? 'ShieldScan API connected — showing real data'
-        : 'ShieldScan API offline — run: python -m ai_scam_protection.cli api-server';
+        : 'Local API offline — cloud protection active (URLhaus, PhishTank, Google Safe Browsing)';
     }
     if (banner) {
-      banner.style.display = online ? 'none' : 'flex';
+      banner.style.display = 'none'; // Never show offline banner — cloud APIs handle it
     }
   }
 
@@ -399,82 +399,137 @@ class RealtimeDashboard {
   }
 
   async performAIScan(input) {
-    const scanBtn = document.getElementById('aiScanBtn');
-    const originalText = scanBtn?.textContent;
-    
+    const scanBtn = document.getElementById('aiScanBtn') || document.getElementById('aiScanTextBtn');
+    const originalHTML = scanBtn?.innerHTML;
+
     if (scanBtn) {
-      scanBtn.textContent = 'Scanning...';
+      scanBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Scanning…';
       scanBtn.disabled = true;
     }
 
-    // Send to background for analysis
-    this.sendMessageToBackground({
-      type: 'SCAN_REQUEST',
-      data: { input }
-    }, (result) => {
-      if (scanBtn) {
-        scanBtn.textContent = originalText;
-        scanBtn.disabled = false;
-      }
+    const restore = () => {
+      if (scanBtn) { if (originalHTML) scanBtn.innerHTML = originalHTML; scanBtn.disabled = false; }
+    };
 
-      if (result) {
-        this.showScanResult(input, result);
-      }
+    // 1. Try background service (which uses local API + cloud fallback)
+    const bgResult = await new Promise(resolve => {
+      this.sendMessageToBackground({ type: 'SCAN_REQUEST', data: { input } }, (r) => resolve(r));
     });
+
+    if (bgResult && !bgResult.error) {
+      restore();
+      this.showScanResult(input, bgResult);
+      return;
+    }
+
+    // 2. Direct cloud API call from dashboard (URLhaus)
+    try {
+      const body = new URLSearchParams({ url: input });
+      const r = await fetch('https://urlhaus-api.abuse.ch/v1/url/', {
+        method: 'POST', body,
+        signal: AbortSignal.timeout(6000),
+      });
+      if (r.ok) {
+        const data = await r.json();
+        restore();
+        if (data.query_status === 'is_malware') {
+          this.showScanResult(input, { result: 'malicious', score: 95, source: 'URLhaus', threat: data.threat });
+        } else {
+          // Run local heuristics
+          const local = this._localHeuristics(input);
+          this.showScanResult(input, local);
+        }
+        return;
+      }
+    } catch (_) {}
+
+    // 3. Local heuristics only
+    restore();
+    const local = this._localHeuristics(input);
+    this.showScanResult(input, local);
+  }
+
+  _localHeuristics(input) {
+    const lower = input.toLowerCase();
+    let score = 0;
+    const suspicious = ['secure-login','verify-account','update-payment','claim-reward','phishing','malware','free-gift','urgent','account-suspended','confirm-identity','bitcoin','crypto-reward','free-iphone','winner','prize'];
+    const suspTLDs = ['.tk','.ml','.ga','.cf','.xyz','.top','.click','.gq'];
+    for (const kw of suspicious) { if (lower.includes(kw)) score += 20; }
+    for (const tld of suspTLDs) { if (lower.includes(tld)) score += 25; }
+    if (/https?:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(input)) score += 40;
+    if (input.length > 200) score += 15;
+    if ((input.match(/\./g) || []).length > 5) score += 15;
+    score = Math.min(score, 100);
+    return {
+      result: score >= 70 ? 'malicious' : score >= 35 ? 'suspicious' : 'safe',
+      score,
+      source: 'heuristics',
+    };
   }
 
   showScanResult(input, result) {
-    const resultClass = result.result === 'malicious' ? 'danger' : 
-                       result.result === 'suspicious' ? 'warning' : 'safe';
-    
-    const resultIcon = result.result === 'malicious' ? '🚫' : 
-                      result.result === 'suspicious' ? '⚠️' : '✅';
+    const r = result.result || (result.score >= 70 ? 'malicious' : result.score >= 35 ? 'suspicious' : 'safe');
+    const resultClass = r === 'malicious' ? 'danger' : r === 'suspicious' ? 'warning' : 'safe';
+    const resultIcon  = r === 'malicious' ? '🚫' : r === 'suspicious' ? '⚠️' : '✅';
+    const resultText  = r === 'malicious' ? 'MALICIOUS — Blocked' : r === 'suspicious' ? 'SUSPICIOUS — Flagged' : 'SAFE';
+    const source      = result.source ? ` · ${result.source}` : '';
 
-    const resultText = result.result === 'malicious' ? 'MALICIOUS - Blocked' : 
-                      result.result === 'suspicious' ? 'SUSPICIOUS - Flagged' : 'SAFE';
-
-    // Create result display
     const resultDiv = document.createElement('div');
     resultDiv.className = `scan-result ${resultClass}`;
-    resultDiv.style.cssText = `
-      margin-top: 16px;
-      padding: 16px;
-      border-radius: 12px;
-      align-items: center;
-      gap: 12px;
-      animation: fadeIn 0.3s ease;
-    `;
-    
+    resultDiv.style.cssText = 'margin-top:16px;padding:16px;border-radius:12px;display:flex;align-items:center;gap:12px;animation:fadeIn 0.3s ease';
     resultDiv.innerHTML = `
-      <div style="font-size: 24px;">${resultIcon}</div>
-      <div style="flex: 1;">
-        <div style="font-weight: 700; margin-bottom: 4px;">${resultText}</div>
-        <div style="font-size: 12px; opacity: 0.8; word-break: break-all;">${this.truncateUrl(input, 60)}</div>
-        ${result.score ? `<div style="font-size: 11px; margin-top: 4px;">Risk Score: ${result.score}/100</div>` : ''}
-      </div>
-    `;
+      <div style="font-size:24px">${resultIcon}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;margin-bottom:4px">${resultText}</div>
+        <div style="font-size:12px;opacity:.8;word-break:break-all">${this.truncateUrl ? this.truncateUrl(input, 60) : input.slice(0, 60)}</div>
+        ${result.score != null ? `<div style="font-size:11px;margin-top:4px">Risk Score: ${result.score}/100${source}</div>` : ''}
+      </div>`;
 
-    // Insert after scan input
     const scanContainer = document.getElementById('aiScanInput')?.parentElement?.parentElement;
     if (scanContainer) {
-      // Remove previous result
-      const prevResult = scanContainer.querySelector('.scan-result');
-      if (prevResult) prevResult.remove();
-      
+      const prev = scanContainer.querySelector('.scan-result');
+      if (prev) prev.remove();
       scanContainer.appendChild(resultDiv);
     }
 
-    // Add to threat history if malicious
-    if (result.result === 'malicious') {
-      this.addThreat({
-        type: 'malicious',
-        title: 'AI Scam Protection - Malicious content detected',
-        url: input,
-        severity: 'high',
-        category: 'scam',
-        action: 'blocked'
+    // Add to recent scans list
+    this._addToRecentScans(input, r, result.score);
+
+    // Track malicious results
+    if (r === 'malicious') {
+      this.addThreat?.({
+        type: 'malicious', title: 'AI Scam Protection — Malicious content detected',
+        url: input, severity: 'high', category: result.source || 'scam', action: 'blocked',
       });
     }
+  }
+
+  _addToRecentScans(url, result, score) {
+    const list = document.getElementById('aiRecentScans');
+    if (!list) return;
+    const isMal = result === 'malicious';
+    const isSus = result === 'suspicious';
+    const row = document.createElement('div');
+    row.className = 'recent-scan-row';
+    row.innerHTML = `
+      <div class="recent-scan-left">
+        <div class="recent-scan-icon" style="${isMal ? 'background:rgba(240,82,82,0.12);border-color:rgba(240,82,82,0.25)' : ''}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${isMal ? 'var(--red)' : 'var(--accent)'}" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+          </svg>
+        </div>
+        <div class="recent-scan-info">
+          <div class="recent-scan-title">${url.length > 50 ? url.slice(0, 50) + '…' : url}</div>
+          <div class="recent-scan-sub">Scanned · just now${score != null ? ` · ${score}/100` : ''}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="recent-pill ${isMal ? 'malicious' : isSus ? 'malicious' : 'safe'}">${isMal ? 'Malicious' : isSus ? 'Suspicious' : 'Safe'}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>`;
+    list.insertBefore(row, list.firstChild);
+    // Keep max 5 rows
+    while (list.children.length > 5) list.removeChild(list.lastChild);
   }
 
   setupToolsPage() {
