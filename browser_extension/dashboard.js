@@ -63,32 +63,39 @@ class RealtimeDashboard {
       this._updateApiStatusIndicator(true);
     } else {
       this._updateApiStatusIndicator(false);
-      // Fallback: ask background service
+      // Fallback: ask background service (no network request — uses in-memory state)
       this.sendMessageToBackground({ type: 'REQUEST_STATS' }, (stats) => {
         if (stats) {
-          this.stats = { ...this.stats, ...stats };
+          this.stats.threatsBlocked = stats.threatsBlocked ?? this.stats.threatsBlocked;
+          this.stats.protectionScore = stats.protectionScore ?? this.stats.protectionScore;
+          this.stats.scansToday = stats.scansToday ?? this.stats.scansToday;
           this.updateDashboardStats();
         }
       });
     }
 
-    // Load protection status
-    const apiStatus = await this._apiGet('/api/status');
-    if (apiStatus && !apiStatus.error) {
-      this.updateProtectionStatus({
-        active: apiStatus.protection_active,
-        mainShield: apiStatus.real_time_shield,
-        vpnEnabled: apiStatus.vpn_enabled,
-        latestDetection: apiStatus.latest_detection,
-      });
+    // Load protection status — only if API is online
+    if (this._apiFailCount === 0) {
+      const apiStatus = await this._apiGet('/api/status');
+      if (apiStatus && !apiStatus.error) {
+        this.updateProtectionStatus({
+          active: apiStatus.protection_active,
+          mainShield: apiStatus.real_time_shield,
+          vpnEnabled: apiStatus.vpn_enabled,
+          latestDetection: apiStatus.latest_detection,
+        });
+      }
     } else {
+      // Use background status when API offline
       this.sendMessageToBackground({ type: 'REQUEST_STATUS' }, (status) => {
         if (status) this.updateProtectionStatus(status);
       });
     }
 
-    // Load real detections
-    this.loadRecentThreats();
+    // Load real detections — only if API is online
+    if (this._apiFailCount === 0) {
+      this.loadRecentThreats();
+    }
   }
 
   _updateApiStatusIndicator(online) {
@@ -141,13 +148,29 @@ class RealtimeDashboard {
     this.updateDashboardStats();
   }
 
-  // Direct fetch to local API (used by dashboard page itself, not via background)
+  // Direct fetch to local API — with circuit breaker to stop spamming console
   async _apiGet(path) {
+    // Circuit breaker: stop trying after 3 consecutive failures
+    if (this._apiFailCount >= 3) {
+      // Retry every 60s instead of every poll cycle
+      const now = Date.now();
+      if (!this._apiRetryAt || now < this._apiRetryAt) return null;
+      // Time to retry — reset
+      this._apiFailCount = 0;
+      this._apiRetryAt = null;
+    }
     try {
-      const r = await fetch(`http://localhost:8765${path}`, { signal: AbortSignal.timeout(4000) });
-      if (!r.ok) return null;
+      const r = await fetch(`http://localhost:8765${path}`, { signal: AbortSignal.timeout(2000) });
+      if (!r.ok) { this._apiFailCount = (this._apiFailCount || 0) + 1; return null; }
+      this._apiFailCount = 0; // reset on success
       return await r.json();
-    } catch { return null; }
+    } catch {
+      this._apiFailCount = (this._apiFailCount || 0) + 1;
+      if (this._apiFailCount >= 3) {
+        this._apiRetryAt = Date.now() + 60000; // retry in 60s
+      }
+      return null;
+    }
   }
 
   async _apiPost(path, body) {
@@ -2648,11 +2671,17 @@ class RealtimeDashboard {
   // LIVE DATA MANAGER — connects all pages to real API + background service
   // ═══════════════════════════════════════════════════════════════════════════
   setupLiveData() {
-    // Poll API every 30s and update all visible pages
-    this._liveDataTick();
-    setInterval(() => this._liveDataTick(), 30000);
+    // Initial tick after a short delay
+    setTimeout(() => this._liveDataTick(), 2000);
 
-    // Also update when navigating to a page
+    // Poll every 30s — but only if API is online (circuit breaker)
+    setInterval(() => {
+      if (this._apiFailCount === 0 || !this._apiRetryAt || Date.now() >= this._apiRetryAt) {
+        this._liveDataTick();
+      }
+    }, 30000);
+
+    // Wrap navigateToPage to update page data on navigation
     const origNav = this.navigateToPage.bind(this);
     this.navigateToPage = (pageId) => {
       origNav(pageId);
@@ -3908,20 +3937,37 @@ class RealtimeDashboard {
   }
 
   startRealtimeUpdates() {
-    // Poll real API stats every 10 seconds
-    setInterval(() => {
-      this.loadSystemStats();
-    }, 10000);
+    // Initial load
+    this.loadSystemStats();
 
-    // Update time displays every 30 seconds
+    // Adaptive polling — slows down when API is offline
+    let pollInterval = 15000; // start at 15s
+    const maxInterval = 120000; // max 2 min when offline
+
+    const poll = async () => {
+      const wasOnline = this._apiFailCount === 0;
+      await this.loadSystemStats();
+      const isOnline = this._apiFailCount === 0;
+
+      // Adjust interval based on API availability
+      if (isOnline) {
+        pollInterval = 15000; // fast when online
+      } else {
+        pollInterval = Math.min(pollInterval * 2, maxInterval); // backoff when offline
+      }
+      setTimeout(poll, pollInterval);
+    };
+
+    // Start polling after initial load
+    setTimeout(poll, pollInterval);
+
+    // Update time displays every 60 seconds (no API needed)
+    setInterval(() => { this.updateTimeDisplays(); }, 60000);
+
+    // Poll for new detections — only when API is known to be online
     setInterval(() => {
-      this.updateTimeDisplays();
+      if (this._apiFailCount === 0) this.pollNewDetections();
     }, 30000);
-
-    // Poll for new real detections every 15 seconds
-    setInterval(() => {
-      this.pollNewDetections();
-    }, 15000);
   }
 
   async pollNewDetections() {
