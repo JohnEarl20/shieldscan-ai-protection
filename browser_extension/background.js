@@ -1039,24 +1039,40 @@ function countCharacter(value, character) {
 
 const SHIELDSCAN_API_BASE = 'http://localhost:8765';
 
+// Circuit breaker — stops hammering localhost when server is offline
+let _bgApiFailCount = 0;
+let _bgApiRetryAt = 0;
+function _bgCircuitOpen() {
+  if (_bgApiFailCount < 3) return false;
+  if (Date.now() >= _bgApiRetryAt) { _bgApiFailCount = 0; return false; }
+  return true;
+}
+function _bgOnFail() { _bgApiFailCount++; if (_bgApiFailCount >= 3) _bgApiRetryAt = Date.now() + 120000; }
+function _bgOnSuccess() { _bgApiFailCount = 0; }
+
 async function _apiGet(path) {
+  if (_bgCircuitOpen()) return null;
   try {
-    const res = await fetch(`${SHIELDSCAN_API_BASE}${path}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const res = await fetch(`${SHIELDSCAN_API_BASE}${path}`, { signal: AbortSignal.timeout(2000) });
+    if (!res.ok) { _bgOnFail(); return null; }
+    _bgOnSuccess();
     return await res.json();
-  } catch { return null; }
+  } catch { _bgOnFail(); return null; }
 }
 
 async function _apiPost(path, body) {
+  if (_bgCircuitOpen()) return null;
   try {
     const res = await fetch(`${SHIELDSCAN_API_BASE}${path}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(4000),
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) { _bgOnFail(); return null; }
+    _bgOnSuccess();
     return await res.json();
-  } catch { return null; }
+  } catch { _bgOnFail(); return null; }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
